@@ -47,4 +47,7 @@ dependencies {
     implementation 'org.jetbrains.anko:anko:0.10.5'
     implementation 'org.jetbrains.anko:anko-commons:0.10.5'
 
+    // viewModel and liveData
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
 }

@@ -1,11 +1,12 @@
 package com.albuquerque.tvshow.modules.auth.business
 
 import com.albuquerque.tvshow.modules.auth.database.AuthDatabase
+import com.albuquerque.tvshow.modules.auth.model.User
 import com.albuquerque.tvshow.modules.auth.network.AuthNetwork
 
 object AuthBusiness {
 
-    fun doLogin(username: String, password: String){
+    fun doLogin(username: String, password: String, onSuccess: (user: User)-> Unit, onError: (msg: Throwable) -> Unit){
 
         with(AuthNetwork){
             requestToken(
@@ -21,27 +22,31 @@ object AuthBusiness {
                                                 requestUser(session.sessionId,
                                                         {
                                                             AuthDatabase.saveOrUpdate(it)
+                                                            onSuccess(it)
                                                         },
                                                         {
-                                                            // erro request user
+                                                            onError(it)
                                                         }
                                                 )
                                             },
 
                                             {
                                                 // erro ao criar sessao
+                                                onError(it)
                                             }
                                     )
                                 },
 
                                 {
                                     // erro ao validar token com credenciais
+                                    onError(it)
                                 }
                         )
                     },
 
                     {
                         // erro ao criar token
+                        onError(it)
                     }
             )
         }
