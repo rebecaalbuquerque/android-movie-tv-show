@@ -8,18 +8,34 @@ import retrofit2.http.*
 
 interface AuthAPI {
 
-    @GET("authentication/token/new?api_key={api_key}")
-    fun fetchRequestToken(@Path("api_key") apiKey: String): Observable<AuthResponse>
+    @GET("authentication/token/new")
+    fun fetchRequestToken(
+            @Query("api_key") apiKey: String
+    ): Observable<AuthResponse>
 
-    @POST("authentication/token/validate_with_login?api_key={api_key}")
+    @POST("authentication/token/validate_with_login")
     fun fetchValidationToken(
-            @Path("api_key") apiKey: String, @Body request: AuthRequest): Observable<AuthResponse>
+            @Query("api_key") apiKey: String,
+            @Body request: AuthRequest
+    ): Observable<AuthResponse>
 
-    @POST("authentication/session/new?api_key={api_key}")
+    @FormUrlEncoded
+    @POST("authentication/session/new")
     fun createSession(
-            @Path("api_key") apiKey: String,
-            @Field("request_token") requestToken: String): Observable<AuthResponse>
+            @Query("api_key") apiKey: String,
+            @Field("request_token") requestToken: String
+    ): Observable<AuthResponse>
 
-    @GET("account?api_key={api_key}&session_id={session_id}")
-    fun fetchUser(@Path("api_key") apiKey: String, @Path("session_id") sessionId: String): Observable<User>
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "authentication/session", hasBody = true)
+    fun deleteSession(
+            @Query("api_key") apiKey: String,
+            @Field("session_id") sessionId: String
+    ): Observable<AuthResponse>
+
+    @GET("account")
+    fun fetchUser(
+            @Query("api_key") apiKey: String,
+            @Query("session_id") sessionId: String
+    ): Observable<User>
 }

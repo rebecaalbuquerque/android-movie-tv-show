@@ -3,7 +3,7 @@ package com.albuquerque.tvshow.modules.auth.model
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 
-class AuthResponse: RealmObject() {
+class AuthResponse {
 
     var success: Boolean? = null
 
@@ -15,5 +15,11 @@ class AuthResponse: RealmObject() {
 
     @SerializedName("session_id")
     var sessionId: String = ""
+
+    @SerializedName("status_code")
+    var statusCode: Int = -1
+
+    @SerializedName("status_message")
+    var statusMessage: String = ""
 
 }
