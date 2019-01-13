@@ -1,6 +1,5 @@
 package com.albuquerque.tvshow.modules.auth.network
 
-import com.albuquerque.tvshow.modules.auth.model.AuthRequest
 import com.albuquerque.tvshow.modules.auth.model.AuthResponse
 import com.albuquerque.tvshow.modules.auth.model.User
 import io.reactivex.Observable
@@ -13,10 +12,13 @@ interface AuthAPI {
             @Query("api_key") apiKey: String
     ): Observable<AuthResponse>
 
+    @FormUrlEncoded
     @POST("authentication/token/validate_with_login")
     fun fetchValidationToken(
             @Query("api_key") apiKey: String,
-            @Body request: AuthRequest
+            @Field("username") username: String,
+            @Field("password") password: String,
+            @Field("request_token") requestToken: String
     ): Observable<AuthResponse>
 
     @FormUrlEncoded

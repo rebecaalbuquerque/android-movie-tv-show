@@ -4,12 +4,10 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.albuquerque.tvshow.core.livedata.SingleLiveEvent
-import com.albuquerque.tvshow.core.model.ErrorMessage
 import com.albuquerque.tvshow.modules.auth.business.AuthBusiness
 import com.albuquerque.tvshow.modules.auth.database.AuthDatabase
 import com.albuquerque.tvshow.modules.auth.model.User
-import com.google.gson.Gson
-import retrofit2.HttpException
+import com.albuquerque.tvshow.modules.auth.utils.AuthUtils
 
 class AuthViewModel : ViewModel() {
 
@@ -52,19 +50,7 @@ class AuthViewModel : ViewModel() {
                 },
 
                 onError = { error ->
-
-                    when(error){
-                        is HttpException -> {
-                            val errorMessage = Gson().fromJson(
-                                    error.response().errorBody()?.charStream(),
-                                    ErrorMessage::class.java)
-
-                            onError.value = errorMessage.status_message
-                        }
-
-                        else -> onError.value = "Erro!!!"
-                    }
-
+                    onError.value = AuthUtils.geErrorMessage(error) ?: "Erro!!!"
                     onError.call()
                 }
         )
@@ -77,10 +63,11 @@ class AuthViewModel : ViewModel() {
                     AuthDatabase.clearDatabase()
                     onLogoutSucess.call()
                 },
-                {
-                    onError.value = "Erro logout!"
+                { error ->
+                    onError.value = AuthUtils.geErrorMessage(error) ?: "Erro!!!"
                     onError.call()
                 }
         )
     }
+
 }

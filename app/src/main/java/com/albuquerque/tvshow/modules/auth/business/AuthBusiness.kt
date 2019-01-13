@@ -7,7 +7,7 @@ import com.albuquerque.tvshow.modules.auth.network.AuthNetwork
 object AuthBusiness {
 
     fun doLogin(username: String, password: String, onSuccess: (user: User)-> Unit, onError: (msg: Throwable) -> Unit){
-        var sessionId = ""
+        var sessionId: String
 
         with(AuthNetwork){
             requestToken(
