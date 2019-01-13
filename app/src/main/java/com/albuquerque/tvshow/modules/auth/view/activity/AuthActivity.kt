@@ -9,9 +9,9 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
-import com.albuquerque.tvshow.core.view.BaseActivity
+import com.albuquerque.tvshow.core.view.activity.BaseActivity
 import com.albuquerque.tvshow.modules.shows.view.activity.HomeActivity
-import com.albuquerque.tvshow.modules.viewmodel.AuthViewModel
+import com.albuquerque.tvshow.modules.auth.viewmodel.AuthViewModel
 import kotlinx.android.synthetic.main.activity_auth.*
 
 class AuthActivity : BaseActivity() {
@@ -39,23 +39,11 @@ class AuthActivity : BaseActivity() {
             )
         }
 
-        // TODO: não é para ficar nesta tela. está aqui apenas para teste
-        /*btnLogout.setOnClickListener {
-            progressAuth.visibility = VISIBLE
-            authViewModel.handlerLogout()
-        }*/
-
     }
 
     private fun subscribeUI(){
 
         with(authViewModel){
-
-            // TODO: não é para ficar nesta tela. está aqui apenas para teste
-            /*onLogoutSucess.observe(this@AuthActivity, Observer {
-                progressAuth.visibility = GONE
-                // Redireciona
-            })*/
 
             onUserLogged.observe(this@AuthActivity, Observer {
                 startActivity(Intent(this@AuthActivity, HomeActivity::class.java))

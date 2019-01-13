@@ -59,4 +59,8 @@ object AuthBusiness {
         )
     }
 
+    fun getUserAvatar(): String {
+        return AuthDatabase.getUserGravatarHash()
+    }
+
 }

@@ -1,11 +1,11 @@
 package com.albuquerque.tvshow.modules.shows.view.activity
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.view.Menu
 import com.albuquerque.tvshow.R
-import com.albuquerque.tvshow.core.view.BaseActivity
-import com.albuquerque.tvshow.modules.viewmodel.AuthViewModel
+import com.albuquerque.tvshow.core.view.activity.BaseActivity
+import com.albuquerque.tvshow.modules.auth.viewmodel.AuthViewModel
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity() {
@@ -21,16 +21,14 @@ class HomeActivity : BaseActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_home, menu)
+        return true
+    }
+
     private fun subscribeUI() {
 
         with(authViewModel){
-
-            getLoggedUser().observe(this@HomeActivity, Observer { user ->
-                user?.let {
-                    nome.text = it.name
-                    username.text = it.username
-                }
-            })
 
         }
 
