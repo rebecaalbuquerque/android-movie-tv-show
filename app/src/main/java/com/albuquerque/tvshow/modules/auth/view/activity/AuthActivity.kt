@@ -2,18 +2,19 @@ package com.albuquerque.tvshow.modules.auth.view.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
+import com.albuquerque.tvshow.core.view.BaseActivity
+import com.albuquerque.tvshow.modules.shows.view.activity.HomeActivity
 import com.albuquerque.tvshow.modules.viewmodel.AuthViewModel
 import kotlinx.android.synthetic.main.activity_auth.*
 
-class AuthActivity : AppCompatActivity() {
+class AuthActivity : BaseActivity() {
 
     private lateinit var authViewModel: AuthViewModel
 
@@ -39,10 +40,10 @@ class AuthActivity : AppCompatActivity() {
         }
 
         // TODO: não é para ficar nesta tela. está aqui apenas para teste
-        btnLogout.setOnClickListener {
+        /*btnLogout.setOnClickListener {
             progressAuth.visibility = VISIBLE
             authViewModel.handlerLogout()
-        }
+        }*/
 
     }
 
@@ -51,15 +52,20 @@ class AuthActivity : AppCompatActivity() {
         with(authViewModel){
 
             // TODO: não é para ficar nesta tela. está aqui apenas para teste
-            onLogoutSucess.observe(this@AuthActivity, Observer {
+            /*onLogoutSucess.observe(this@AuthActivity, Observer {
                 progressAuth.visibility = GONE
-                status.text = "Usuário efetuou logout!"
+                // Redireciona
+            })*/
+
+            onUserLogged.observe(this@AuthActivity, Observer {
+                startActivity(Intent(this@AuthActivity, HomeActivity::class.java))
+                finish()
             })
 
             onLoginSucess.observe(this@AuthActivity, Observer {
                 progressAuth.visibility = GONE
-                status.text = "Usuário efetuou login!"
-                // Redireciona
+                startActivity(Intent(this@AuthActivity, HomeActivity::class.java))
+                finish()
             })
 
             onError.observe(this@AuthActivity, Observer { error ->

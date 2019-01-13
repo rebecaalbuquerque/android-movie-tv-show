@@ -18,5 +18,7 @@ object AuthDatabase: BaseDatabase() {
 
     }
 
+    fun getUser(): User? = Realm.getDefaultInstance().where(User::class.java).findFirst()
+
     fun getSessionId(): String = Realm.getDefaultInstance().where(User::class.java).findFirst()?.sessionId ?: ""
 }

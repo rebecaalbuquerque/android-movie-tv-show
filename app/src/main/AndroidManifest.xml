@@ -12,15 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".modules.auth.view.activity.AuthActivity">
+        <activity
+            android:name=".modules.auth.view.activity.AuthActivity"
+            android:theme="@style/AuthActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name="com.albuquerque.tvshow.modules.shows.view.activity.HomeActivity"></activity>
     </application>
 
 </manifest>

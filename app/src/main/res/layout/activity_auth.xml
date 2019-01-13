@@ -6,7 +6,23 @@
     android:id="@+id/authLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#081c24"
     tools:context=".modules.auth.view.activity.AuthActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/tmdb_logo"
+        app:layout_constraintBottom_toTopOf="@+id/formCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <ProgressBar
         android:id="@+id/progressAuth"
@@ -21,41 +37,58 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/authUsername"
-        android:inputType="text"
-        android:hint="Usuário"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/authPassword"
-        android:inputType="textPassword"
-        android:hint="Senha"
+    <android.support.v7.widget.CardView
+        android:id="@+id/formCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/authUsername"/>
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        app:cardBackgroundColor="#FCFAF9"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo">
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:text="Login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/authPassword"/>
+        <LinearLayout
+            android:id="@+id/formLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:text="Logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"/>
+            <EditText
+                android:id="@+id/authUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="Usuário"
+                android:inputType="text"
+                android:shadowColor="@color/colorPrimary"
+                tools:ignore="Autofill" />
 
-    <TextView
-        android:id="@+id/status"
-        android:text="Status"
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogout"/>
+            <EditText
+                android:id="@+id/authPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="Senha"
+                android:inputType="textPassword"
+                tools:ignore="Autofill" />
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:backgroundTint="#01D277"
+                android:text="Login" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>
