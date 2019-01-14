@@ -2,7 +2,6 @@ package com.albuquerque.tvshow.modules.auth.view.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.View.GONE
@@ -10,9 +9,10 @@ import android.view.View.VISIBLE
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
 import com.albuquerque.tvshow.core.view.activity.BaseActivity
-import com.albuquerque.tvshow.modules.shows.view.activity.HomeActivity
 import com.albuquerque.tvshow.modules.auth.viewmodel.AuthViewModel
+import com.albuquerque.tvshow.modules.shows.view.activity.HomeActivity
 import kotlinx.android.synthetic.main.activity_auth.*
+import org.jetbrains.anko.startActivity
 
 class AuthActivity : BaseActivity() {
 
@@ -46,13 +46,13 @@ class AuthActivity : BaseActivity() {
         with(authViewModel){
 
             onUserLogged.observe(this@AuthActivity, Observer {
-                startActivity(Intent(this@AuthActivity, HomeActivity::class.java))
+                startActivity<HomeActivity>()
                 finish()
             })
 
             onLoginSucess.observe(this@AuthActivity, Observer {
                 progressAuth.visibility = GONE
-                startActivity(Intent(this@AuthActivity, HomeActivity::class.java))
+                startActivity<HomeActivity>()
                 finish()
             })
 

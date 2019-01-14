@@ -1,7 +1,6 @@
 package com.albuquerque.tvshow.modules.auth.database
 
 import com.albuquerque.tvshow.core.database.BaseDatabase
-import com.albuquerque.tvshow.modules.auth.model.Avatar
 import com.albuquerque.tvshow.modules.auth.model.Gravatar
 import com.albuquerque.tvshow.modules.auth.model.User
 import io.realm.Realm

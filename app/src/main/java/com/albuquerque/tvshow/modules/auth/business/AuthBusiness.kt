@@ -1,5 +1,6 @@
 package com.albuquerque.tvshow.modules.auth.business
 
+import com.albuquerque.tvshow.core.network.BaseNetwork
 import com.albuquerque.tvshow.modules.auth.database.AuthDatabase
 import com.albuquerque.tvshow.modules.auth.model.User
 import com.albuquerque.tvshow.modules.auth.network.AuthNetwork
@@ -23,6 +24,7 @@ object AuthBusiness {
                                         requestUser(session.sessionId,
                                             {
                                                 it.sessionId = sessionId
+                                                it.avatarUrl = BaseNetwork.BASE_GRAVATAR_URL + it.avatar?.gravatar?.hash + ".jpg?s=250"
                                                 onSuccess(it)
                                             },
                                             {

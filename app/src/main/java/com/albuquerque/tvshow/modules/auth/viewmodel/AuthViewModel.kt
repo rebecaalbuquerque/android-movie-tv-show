@@ -37,11 +37,7 @@ class AuthViewModel : ViewModel() {
     fun getLoggedUser(): LiveData<User>{
         if (!::usuario.isInitialized) {
             usuario = MutableLiveData()
-            // TODO: tirar essa gambiarra
-            val userDb = AuthDatabase.getUser()
-            val gravatarDb = AuthDatabase.getUserGravatarHash()
-
-            usuario.value = User(userDb!!.id, userDb.sessionId, userDb.name, userDb.username, gravatarDb)
+            usuario.value = AuthDatabase.getUser()
         }
 
         return usuario

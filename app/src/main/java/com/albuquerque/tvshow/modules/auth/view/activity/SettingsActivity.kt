@@ -14,6 +14,9 @@ import com.albuquerque.tvshow.modules.auth.viewmodel.AuthViewModel
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_settings.*
+import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
 import org.jetbrains.anko.startActivity
 
 class SettingsActivity : BaseActivity() {
@@ -51,13 +54,12 @@ class SettingsActivity : BaseActivity() {
 
             onLogoutSucess.observe(this@SettingsActivity, Observer {
                 startActivity<AuthActivity>()
-                finish()
                 progressSettings.visibility = GONE
+                startActivity(intentFor<AuthActivity>().clearTask().newTask())
             })
 
             onError.observe(this@SettingsActivity, Observer { error ->
                 error?.let {
-                    //progressAuth.visibility = GONE
                     Snackbar.make(settingsLayout, error, Snackbar.LENGTH_LONG).showError()
                     progressSettings.visibility = GONE
                 }
