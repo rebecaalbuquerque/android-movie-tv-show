@@ -4,13 +4,10 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.albuquerque.tvshow.core.livedata.SingleLiveEvent
-import com.albuquerque.tvshow.core.network.BaseNetwork
 import com.albuquerque.tvshow.modules.auth.business.AuthBusiness
 import com.albuquerque.tvshow.modules.auth.database.AuthDatabase
 import com.albuquerque.tvshow.modules.auth.model.User
-import com.albuquerque.tvshow.modules.auth.network.AuthNetwork
 import com.albuquerque.tvshow.modules.auth.utils.AuthUtils
-import org.jetbrains.anko.doAsyncResult
 
 class AuthViewModel : ViewModel() {
 
@@ -19,7 +16,7 @@ class AuthViewModel : ViewModel() {
     val onError = SingleLiveEvent<String>()
     val onUserLogged = SingleLiveEvent<Void>()
 
-    private lateinit var usuario: MutableLiveData<User>
+    private lateinit var user: MutableLiveData<User>
 
     init {
         if(AuthDatabase.getSessionId().isNotBlank())
@@ -35,12 +32,12 @@ class AuthViewModel : ViewModel() {
     }
 
     fun getLoggedUser(): LiveData<User>{
-        if (!::usuario.isInitialized) {
-            usuario = MutableLiveData()
-            usuario.value = AuthDatabase.getUser()
+        if (!::user.isInitialized) {
+            user = MutableLiveData()
+            user.value = AuthDatabase.getUser()
         }
 
-        return usuario
+        return user
     }
 
     private fun requestLogin(user: String, pass: String){
