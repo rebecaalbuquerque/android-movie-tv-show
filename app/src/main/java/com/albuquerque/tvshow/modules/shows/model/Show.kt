@@ -1,5 +1,6 @@
 package com.albuquerque.tvshow.modules.shows.model
 
+import com.albuquerque.tvshow.core.network.BaseNetwork.Companion.BASE_IMAGE_URL
 import com.google.gson.annotations.SerializedName
 
 class Show {
@@ -19,6 +20,7 @@ class Show {
 
     @SerializedName("poster_path")
     var posterPath: String = ""
+        get() = BASE_IMAGE_URL + field
 
     var overview: String = ""
 

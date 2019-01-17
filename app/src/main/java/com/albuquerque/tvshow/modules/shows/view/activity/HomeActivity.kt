@@ -4,10 +4,9 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
-import android.view.MotionEvent
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
@@ -41,8 +40,6 @@ class HomeActivity : BaseActivity() {
 
     private fun setupAdapter(){
         rvCategories.adapter = categoryShowsAdapter
-
-
     }
 
     private fun subscribeUI(){
@@ -51,6 +48,7 @@ class HomeActivity : BaseActivity() {
 
             getCategories().observe(this@HomeActivity, Observer { categories ->
                 categories?.let {
+                    progressHome.visibility = GONE
                     categoryShowsAdapter.refresh(it)
                 }
             })

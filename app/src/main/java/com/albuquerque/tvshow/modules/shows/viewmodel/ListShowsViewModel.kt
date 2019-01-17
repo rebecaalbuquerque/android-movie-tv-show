@@ -17,13 +17,20 @@ class ListShowsViewModel: ViewModel() {
     private lateinit var categories: MutableLiveData<List<CategoryShow>>
 
     fun getCategories(): LiveData<List<CategoryShow>> {
-        val airingToday = requestAiringToday()
-        val popular = requestPopular()
-        val topRated = requestTopRated()
 
         if (!::categories.isInitialized) {
             categories = MutableLiveData()
-            categories.value = listOf( CategoryShow("Em exibição hoje", airingToday), CategoryShow("Populares", popular), CategoryShow("Melhores avaliadas", topRated) )
+            ShowsBusiness.getCategories(
+                    {
+                        categories.value = it
+                    },
+                    {
+                        onError.value = AuthUtils.geErrorMessage(it) ?: "Erro!!"
+                        onError.call()
+                    }
+            )
+
+
         }
 
         return categories
@@ -31,54 +38,6 @@ class ListShowsViewModel: ViewModel() {
 
     fun handleShowClick(item: Show){
 
-    }
-
-    private fun requestAiringToday(): List<Show> {
-        var result = listOf<Show>()
-
-        ShowsBusiness.getAiringTodayFromAPI(
-                {
-                    result = it
-                },
-                {
-                    onError.value = AuthUtils.geErrorMessage(it) ?: "Erro!!!"
-                    onError.call()
-                }
-        )
-
-        return result
-    }
-
-    private fun requestPopular(): List<Show> {
-        var result = listOf<Show>()
-
-        ShowsBusiness.getPopular(
-                {
-                    result = it
-                },
-                {
-                    onError.value = AuthUtils.geErrorMessage(it) ?: "Erro!!!"
-                    onError.call()
-                }
-        )
-
-        return result
-    }
-
-    private fun requestTopRated(): List<Show> {
-        var result = listOf<Show>()
-
-        ShowsBusiness.getTopRated(
-                {
-                    result = it
-                },
-                {
-                    onError.value = AuthUtils.geErrorMessage(it) ?: "Erro!!!"
-                    onError.call()
-                }
-        )
-
-        return result
     }
 
 }

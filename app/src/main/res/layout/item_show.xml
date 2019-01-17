@@ -7,10 +7,9 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/posterShow"
         android:layout_width="125dp"
         android:layout_height="175dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:src="@color/colorAccent"
@@ -27,11 +26,10 @@
         android:layout_marginBottom="8dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="@+id/posterShow"
+        app:layout_constraintStart_toStartOf="@+id/posterShow"
+        app:layout_constraintTop_toBottomOf="@+id/posterShow"
         tools:text="Lorem ipsum dolor sit amet" />
 
 </android.support.constraint.ConstraintLayout>
