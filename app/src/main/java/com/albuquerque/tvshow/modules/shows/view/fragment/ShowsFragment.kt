@@ -14,8 +14,10 @@ import android.view.ViewGroup
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
 import com.albuquerque.tvshow.modules.shows.adapter.CategoryListShowAdapter
+import com.albuquerque.tvshow.modules.shows.view.activity.DetailActivity
 import com.albuquerque.tvshow.modules.shows.viewmodel.ListShowsViewModel
 import kotlinx.android.synthetic.main.fragment_shows.*
+import org.jetbrains.anko.support.v4.startActivity
 
 class ShowsFragment : Fragment() {
 
@@ -35,6 +37,9 @@ class ShowsFragment : Fragment() {
 
         setupAdapter()
         subscribeUI()
+
+        startActivity<DetailActivity>()
+
     }
 
     private fun setupAdapter(){

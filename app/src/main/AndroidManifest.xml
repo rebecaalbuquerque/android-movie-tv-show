@@ -24,7 +24,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".modules.shows.view.activity.HomeActivity" />
-        <activity android:name=".modules.auth.view.activity.SettingsActivity"></activity>
+        <activity android:name=".modules.auth.view.activity.SettingsActivity" />
+        <activity
+            android:name=".modules.shows.view.activity.DetailActivity"
+            android:label="@string/title_activity_detail"
+            android:parentActivityName=".modules.shows.view.activity.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.albuquerque.tvshow.modules.shows.view.activity.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>
