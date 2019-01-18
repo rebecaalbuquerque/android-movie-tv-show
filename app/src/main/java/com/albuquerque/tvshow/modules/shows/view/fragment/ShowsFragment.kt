@@ -10,11 +10,15 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.albuquerque.tvshow.R
+import com.albuquerque.tvshow.core.extensions.setOnItemClickListener
 import com.albuquerque.tvshow.core.extensions.showError
 import com.albuquerque.tvshow.modules.shows.adapter.CategoryListShowAdapter
+import com.albuquerque.tvshow.modules.shows.adapter.MediaAdapter
 import com.albuquerque.tvshow.modules.shows.view.activity.DetailActivity
+import com.albuquerque.tvshow.modules.shows.view.holder.CategoryListShowViewHolder
 import com.albuquerque.tvshow.modules.shows.viewmodel.ListShowsViewModel
 import kotlinx.android.synthetic.main.fragment_shows.*
 import org.jetbrains.anko.support.v4.startActivity
@@ -33,16 +37,22 @@ class ShowsFragment : Fragment() {
 
         progressShows.visibility = VISIBLE
         listShowsViewModel = ViewModelProviders.of(this).get(ListShowsViewModel::class.java)
-        categoryShowsAdapter = CategoryListShowAdapter()
 
         setupAdapter()
+        setupRecyclerView()
         subscribeUI()
 
-        startActivity<DetailActivity>()
+        //startActivity<DetailActivity>()
+
+    }
+
+    private fun setupRecyclerView(){
+
 
     }
 
     private fun setupAdapter(){
+        categoryShowsAdapter = CategoryListShowAdapter()
         rvCategories.adapter = categoryShowsAdapter
     }
 

@@ -1,5 +1,6 @@
 package com.albuquerque.tvshow.modules.shows.view.holder
 
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.albuquerque.tvshow.core.view.holder.BaseViewHolder
 import com.albuquerque.tvshow.modules.shows.adapter.MediaAdapter
@@ -18,5 +19,7 @@ class CategoryListShowViewHolder(view: View): BaseViewHolder<CategoryShow>(view)
             rvCategory.adapter = mediaAdapter
         }
     }
+
+    fun getRecyclerView(): RecyclerView = itemView.rvCategory
 
 }

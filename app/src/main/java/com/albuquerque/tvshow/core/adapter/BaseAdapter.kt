@@ -12,6 +12,10 @@ abstract class BaseAdapter<T, Holder: BaseViewHolder<T>>: RecyclerView.Adapter<H
         notifyDataSetChanged()
     }
 
+    open fun getItemAt(index: Int): T {
+        return items[index]
+    }
+
     override fun getItemCount(): Int {
         return items.size
     }
