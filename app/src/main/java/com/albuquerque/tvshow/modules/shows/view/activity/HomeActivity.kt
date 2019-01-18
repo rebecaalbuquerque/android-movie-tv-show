@@ -1,36 +1,23 @@
 package com.albuquerque.tvshow.modules.shows.view.activity
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.view.Menu
-import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import com.albuquerque.tvshow.R
-import com.albuquerque.tvshow.core.extensions.showError
+import com.albuquerque.tvshow.core.extensions.openFragment
 import com.albuquerque.tvshow.core.view.activity.BaseActivity
-import com.albuquerque.tvshow.modules.shows.adapter.CategoryListShowAdapter
-import com.albuquerque.tvshow.modules.shows.viewmodel.ListShowsViewModel
+import com.albuquerque.tvshow.modules.shows.view.fragment.MoviesFragment
+import com.albuquerque.tvshow.modules.shows.view.fragment.ShowsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity() {
-
-    private lateinit var listShowsViewModel: ListShowsViewModel
-    private lateinit var categoryShowsAdapter: CategoryListShowAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        progressHome.visibility = VISIBLE
-        listShowsViewModel = ViewModelProviders.of(this).get(ListShowsViewModel::class.java)
-        categoryShowsAdapter = CategoryListShowAdapter()
-
-        setupAdapter()
-        subscribeUI()
-
+        setupBottomNavigation()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -38,29 +25,24 @@ class HomeActivity : BaseActivity() {
         return true
     }
 
-    private fun setupAdapter(){
-        rvCategories.adapter = categoryShowsAdapter
-    }
+    private fun setupBottomNavigation() {
+        // Carregando a fragment inicial
+        MoviesFragment().openFragment(supportFragmentManager, R.id.container)
 
-    private fun subscribeUI(){
+        navigation.setOnNavigationItemSelectedListener( BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when(item.itemId){
 
-        with(listShowsViewModel){
-
-            getCategories().observe(this@HomeActivity, Observer { categories ->
-                categories?.let {
-                    progressHome.visibility = GONE
-                    categoryShowsAdapter.refresh(it)
+                R.id.navigation_movies -> {
+                    MoviesFragment().openFragment(supportFragmentManager, R.id.container)
+                    return@OnNavigationItemSelectedListener true
                 }
-            })
 
-            onError.observe(this@HomeActivity, Observer { error ->
-                error?.let {
-                    progressHome.visibility = View.GONE
-                    Snackbar.make(homeLayout, error, Snackbar.LENGTH_LONG).showError()
+                else -> {
+                    ShowsFragment().openFragment(supportFragmentManager, R.id.container)
+                    return@OnNavigationItemSelectedListener true
                 }
-            })
-
-        }
+            }
+        })
 
     }
 
