@@ -6,17 +6,15 @@ import android.arch.lifecycle.ViewModel
 import com.albuquerque.tvshow.core.livedata.SingleLiveEvent
 import com.albuquerque.tvshow.modules.auth.utils.AuthUtils
 import com.albuquerque.tvshow.modules.shows.business.ShowsBusiness
-import com.albuquerque.tvshow.modules.shows.model.CategoryShow
-import com.albuquerque.tvshow.modules.shows.model.Show
+import com.albuquerque.tvshow.modules.shows.model.Category
 
-class ListShowsViewModel: ViewModel() {
+class CategoryViewModel: ViewModel() {
 
     var onError = SingleLiveEvent<String>()
-    var onShowClicked = SingleLiveEvent<Void>()
 
-    private lateinit var categories: MutableLiveData<List<CategoryShow>>
+    private lateinit var categories: MutableLiveData<List<Category>>
 
-    fun getCategories(): LiveData<List<CategoryShow>> {
+    fun getCategories(): LiveData<List<Category>> {
 
         if (!::categories.isInitialized) {
             categories = MutableLiveData()
@@ -34,10 +32,6 @@ class ListShowsViewModel: ViewModel() {
         }
 
         return categories
-    }
-
-    fun handleShowClick(item: Show){
-
     }
 
 }

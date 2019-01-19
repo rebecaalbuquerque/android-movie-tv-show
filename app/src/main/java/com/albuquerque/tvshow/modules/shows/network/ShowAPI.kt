@@ -1,7 +1,7 @@
 package com.albuquerque.tvshow.modules.shows.network
 
+import com.albuquerque.tvshow.modules.shows.model.Category
 import com.albuquerque.tvshow.modules.shows.model.Show
-import com.albuquerque.tvshow.modules.shows.model.ShowListResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,18 +20,18 @@ interface ShowAPI {
     fun fetchAiringToday(
         @Query("api_key") apiKey: String,
         @Query("language") language: String? = null
-    ): Observable<ShowListResponse>
+    ): Observable<Category>
 
     @GET("tv/popular")
     fun fetchPopular(
             @Query("api_key") apiKey: String,
             @Query("language") language: String? = null
-    ): Observable<ShowListResponse>
+    ): Observable<Category>
 
     @GET("tv/top_rated")
     fun fetchTopRated(
             @Query("api_key") apiKey: String,
             @Query("language") language: String? = null
-    ): Observable<ShowListResponse>
+    ): Observable<Category>
 
 }

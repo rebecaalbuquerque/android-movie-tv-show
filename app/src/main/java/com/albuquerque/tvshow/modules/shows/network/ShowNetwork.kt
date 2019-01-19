@@ -1,8 +1,8 @@
 package com.albuquerque.tvshow.modules.shows.network
 
 import com.albuquerque.tvshow.core.network.BaseNetwork
+import com.albuquerque.tvshow.modules.shows.model.Category
 import com.albuquerque.tvshow.modules.shows.model.Show
-import com.albuquerque.tvshow.modules.shows.model.ShowListResponse
 
 object ShowNetwork: BaseNetwork() {
 
@@ -14,19 +14,19 @@ object ShowNetwork: BaseNetwork() {
         }
     }
 
-    fun fetchAiringToday(onSuccess: (shows: ShowListResponse) -> Unit, onError: (error: Throwable) -> Unit){
+    fun fetchAiringToday(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
             fetchAiringToday(API_KEY)
         }
     }
 
-    fun fetchPopular(onSuccess: (shows: ShowListResponse) -> Unit, onError: (error: Throwable) -> Unit){
+    fun fetchPopular(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
             fetchPopular(API_KEY)
         }
     }
 
-    fun fetchTopRated(onSuccess: (shows: ShowListResponse) -> Unit, onError: (error: Throwable) -> Unit){
+    fun fetchTopRated(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
             fetchTopRated(API_KEY)
         }

@@ -2,7 +2,9 @@ package com.albuquerque.tvshow.modules.shows.model
 
 import com.google.gson.annotations.SerializedName
 
-class ShowListResponse {
+class Category() {
+
+    var name: String = ""
 
     var page: Int = 0
 
@@ -12,5 +14,12 @@ class ShowListResponse {
     @SerializedName("total_pages")
     var totalPages: Int = 0
 
-    var results: List<Show> = listOf()
+    @SerializedName("results")
+    var shows: List<Show> = listOf()
+
+    constructor(name: String, shows: List<Show>): this(){
+        this.name = name
+        this.shows = shows
+    }
+
 }

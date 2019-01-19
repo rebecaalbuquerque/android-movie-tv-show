@@ -1,7 +1,7 @@
 package com.albuquerque.tvshow.modules.shows.business
 
 import com.albuquerque.tvshow.core.business.BaseBusiness
-import com.albuquerque.tvshow.modules.shows.model.CategoryShow
+import com.albuquerque.tvshow.modules.shows.model.Category
 import com.albuquerque.tvshow.modules.shows.model.Show
 import com.albuquerque.tvshow.modules.shows.network.ShowNetwork
 
@@ -18,18 +18,18 @@ object ShowsBusiness : BaseBusiness() {
         )
     }
 
-    fun getCategories(onSuccess: (categories: List<CategoryShow>) -> Unit, onError: (error: Throwable) -> Unit) {
-        val result = mutableListOf<CategoryShow>()
+    fun getCategories(onSuccess: (categories: List<Category>) -> Unit, onError: (error: Throwable) -> Unit) {
+        val result = mutableListOf<Category>()
 
         getAiringTodayFromAPI({ today ->
 
-            result.add(CategoryShow("Em exibição hoje", today))
+            result.add(Category("Em exibição hoje", today))
 
             getPopular({ popular ->
-                result.add(CategoryShow("Populares", popular))
+                result.add(Category("Populares", popular))
 
                 getTopRated({ topRated ->
-                    result.add(CategoryShow("Melhores avaliadas", topRated))
+                    result.add(Category("Melhores avaliadas", topRated))
 
                     onSuccess(result)
 
@@ -49,7 +49,7 @@ object ShowsBusiness : BaseBusiness() {
 
         ShowNetwork.fetchAiringToday(
                 {
-                    onSuccess(it.results)
+                    onSuccess(it.shows)
                 },
                 {
                     onError(it)
@@ -62,7 +62,7 @@ object ShowsBusiness : BaseBusiness() {
 
         ShowNetwork.fetchPopular(
                 {
-                    onSuccess(it.results)
+                    onSuccess(it.shows)
                 },
                 {
                     onError(it)
@@ -75,7 +75,7 @@ object ShowsBusiness : BaseBusiness() {
 
         ShowNetwork.fetchTopRated(
                 {
-                    onSuccess(it.results)
+                    onSuccess(it.shows)
                 },
                 {
                     onError(it)
