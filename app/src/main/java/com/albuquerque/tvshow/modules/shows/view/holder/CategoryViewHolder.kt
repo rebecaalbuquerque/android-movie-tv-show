@@ -4,7 +4,7 @@ import android.view.View
 import com.albuquerque.tvshow.core.view.holder.BaseViewHolder
 import com.albuquerque.tvshow.modules.shows.adapter.MediaAdapter
 import com.albuquerque.tvshow.modules.shows.model.Category
-import kotlinx.android.synthetic.main.item_category_list.view.*
+import kotlinx.android.synthetic.main.item_category.view.*
 
 class CategoryViewHolder(view: View): BaseViewHolder<Category>(view){
 

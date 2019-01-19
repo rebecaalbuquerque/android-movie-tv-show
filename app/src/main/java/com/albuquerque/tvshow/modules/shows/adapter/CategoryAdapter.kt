@@ -11,7 +11,7 @@ import com.albuquerque.tvshow.modules.shows.view.holder.CategoryViewHolder
 class CategoryAdapter: BaseAdapter<Category, BaseViewHolder<Category>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Category> {
-        return CategoryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_category_list, parent, false))
+        return CategoryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false))
     }
 
 }

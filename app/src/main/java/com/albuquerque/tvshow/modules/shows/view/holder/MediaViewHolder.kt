@@ -1,6 +1,7 @@
 package com.albuquerque.tvshow.modules.shows.view.holder
 
 import android.view.View
+import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.view.holder.BaseViewHolder
 import com.albuquerque.tvshow.modules.shows.event.OnShowClicked
 import com.albuquerque.tvshow.modules.shows.model.Show
@@ -13,7 +14,12 @@ class MediaViewHolder(view: View): BaseViewHolder<Show>(view){
     override fun bind(item: Show) {
         with(itemView){
             titleShow.text = item.name
-            Picasso.get().load(item.posterPath).into(posterShow)
+
+            if(item.posterPath.isNotBlank())
+                Picasso.get().load(item.posterPath).into(posterShow)
+            else
+                posterShow.setImageResource(R.drawable.image_placeholder)
+
             average.text = item.average.toString()
 
             posterShow.setOnClickListener {
