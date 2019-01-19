@@ -17,6 +17,7 @@ class Show {
 
     @SerializedName("backdrop_path")
     var backdropPath: String = ""
+        get() = BASE_IMAGE_URL + field
 
     @SerializedName("poster_path")
     var posterPath: String = ""

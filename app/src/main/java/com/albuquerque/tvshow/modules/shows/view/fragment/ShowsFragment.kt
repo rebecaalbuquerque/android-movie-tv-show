@@ -15,15 +15,19 @@ import android.widget.Toast
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.setOnItemClickListener
 import com.albuquerque.tvshow.core.extensions.showError
+import com.albuquerque.tvshow.core.view.fragment.BaseFragment
 import com.albuquerque.tvshow.modules.shows.adapter.CategoryListShowAdapter
 import com.albuquerque.tvshow.modules.shows.adapter.MediaAdapter
+import com.albuquerque.tvshow.modules.shows.event.OnShowClicked
 import com.albuquerque.tvshow.modules.shows.view.activity.DetailActivity
+import com.albuquerque.tvshow.modules.shows.view.activity.DetailActivity.Companion.SHOW_ID
 import com.albuquerque.tvshow.modules.shows.view.holder.CategoryListShowViewHolder
 import com.albuquerque.tvshow.modules.shows.viewmodel.ListShowsViewModel
 import kotlinx.android.synthetic.main.fragment_shows.*
+import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.support.v4.startActivity
 
-class ShowsFragment : Fragment() {
+class ShowsFragment : BaseFragment() {
 
     private lateinit var listShowsViewModel: ListShowsViewModel
     private lateinit var categoryShowsAdapter: CategoryListShowAdapter
@@ -39,15 +43,7 @@ class ShowsFragment : Fragment() {
         listShowsViewModel = ViewModelProviders.of(this).get(ListShowsViewModel::class.java)
 
         setupAdapter()
-        setupRecyclerView()
         subscribeUI()
-
-        //startActivity<DetailActivity>()
-
-    }
-
-    private fun setupRecyclerView(){
-
 
     }
 
@@ -76,6 +72,11 @@ class ShowsFragment : Fragment() {
 
         }
 
+    }
+
+    @Subscribe
+    fun onEvent(event: OnShowClicked) {
+        startActivity<DetailActivity>(SHOW_ID to event.show.id)
     }
 
 }

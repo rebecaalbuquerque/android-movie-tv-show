@@ -7,6 +7,17 @@ import com.albuquerque.tvshow.modules.shows.network.ShowNetwork
 
 object ShowsBusiness : BaseBusiness() {
 
+    fun getShow(id: Int, onSuccess: (show: Show) -> Unit, onError: (error: Throwable) -> Unit){
+        ShowNetwork.fetchShow(id,
+                {
+                    onSuccess(it)
+                },
+                {
+                    onError(it)
+                }
+        )
+    }
+
     fun getCategories(onSuccess: (categories: List<CategoryShow>) -> Unit, onError: (error: Throwable) -> Unit) {
         val result = mutableListOf<CategoryShow>()
 
