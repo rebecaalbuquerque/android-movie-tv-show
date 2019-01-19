@@ -24,7 +24,7 @@ import org.jetbrains.anko.support.v4.startActivity
 
 class ShowsFragment : BaseFragment() {
 
-    private lateinit var listShowsViewModel: CategoryViewModel
+    private lateinit var categoryViewModel: CategoryViewModel
     private lateinit var categoryAdapter: CategoryAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,7 +35,7 @@ class ShowsFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         progressShows.visibility = VISIBLE
-        listShowsViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
+        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
 
         setupAdapter()
         subscribeUI()
@@ -49,7 +49,9 @@ class ShowsFragment : BaseFragment() {
 
     private fun subscribeUI(){
 
-        with(listShowsViewModel){
+        //btnTentarNovamente.setOnClickListener { categoryViewModel.getCategoriesAgain() }
+
+        with(categoryViewModel){
 
             getCategories().observe(this@ShowsFragment, Observer { categories ->
                 categories?.let {
@@ -73,7 +75,7 @@ class ShowsFragment : BaseFragment() {
         progressShows.visibility = GONE
         rvCategories.visibility = GONE
         errorIcon.visibility = VISIBLE
-        btnTentarNovamente.visibility = VISIBLE
+        //btnTentarNovamente.visibility = VISIBLE
     }
 
     @Subscribe

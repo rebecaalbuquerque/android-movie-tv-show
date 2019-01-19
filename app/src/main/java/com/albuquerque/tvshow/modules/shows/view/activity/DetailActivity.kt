@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import com.albuquerque.tvshow.R
+import com.albuquerque.tvshow.core.extensions.showError
 import com.albuquerque.tvshow.modules.shows.viewmodel.ShowViewModel
 import com.albuquerque.tvshow.modules.shows.viewmodel.ShowViewModelFactory
 import com.squareup.picasso.Picasso
@@ -54,14 +55,16 @@ class DetailActivity : AppCompatActivity() {
     private fun subscribeUI() {
         with(showViewModel){
 
-            onError.observe(this@DetailActivity, Observer {
-
+            onError.observe(this@DetailActivity, Observer { error ->
+                error?.let {
+                    Snackbar.make(detailLayout, it, Snackbar.LENGTH_LONG).showError()
+                }
             })
 
             getShow().observe(this@DetailActivity, Observer {  show ->
                 show?.let {
                     toolbar_layout.title = show.name
-                    text2.text = show.overview
+                    overview.text = show.overview
                     Picasso.get().load(show.backdropPath).into(expandedImage)
                 }
             })

@@ -26,8 +26,8 @@
         <activity android:name=".modules.shows.view.activity.HomeActivity" />
         <activity android:name=".modules.auth.view.activity.SettingsActivity" />
         <activity
+            android:label=""
             android:name=".modules.shows.view.activity.DetailActivity"
-            android:label="@string/title_activity_detail"
             android:parentActivityName=".modules.shows.view.activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

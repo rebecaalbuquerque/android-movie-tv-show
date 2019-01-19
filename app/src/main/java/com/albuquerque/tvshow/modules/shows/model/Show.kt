@@ -25,4 +25,7 @@ class Show {
 
     var overview: String = ""
 
+    @SerializedName("vote_average")
+    var average: Double = 0.0
+
 }

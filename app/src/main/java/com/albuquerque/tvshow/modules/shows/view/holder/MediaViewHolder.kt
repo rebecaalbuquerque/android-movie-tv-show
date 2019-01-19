@@ -14,6 +14,7 @@ class MediaViewHolder(view: View): BaseViewHolder<Show>(view){
         with(itemView){
             titleShow.text = item.name
             Picasso.get().load(item.posterPath).into(posterShow)
+            average.text = item.average.toString()
 
             posterShow.setOnClickListener {
                 EventBus.getDefault().post(OnShowClicked(item))

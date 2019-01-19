@@ -34,4 +34,6 @@ class CategoryViewModel: ViewModel() {
         return categories
     }
 
+    fun getCategoriesAgain(){ getCategories() }
+
 }

@@ -6,13 +6,34 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingStart="8dp"
+        android:paddingBottom="8dp"
+        android:paddingEnd="4dp"
+        android:elevation="1dp"
+        android:background="@drawable/shape_average"
+        app:layout_constraintTop_toTopOf="@id/posterShow"
+        app:layout_constraintEnd_toEndOf="@id/posterShow">
+
+        <TextView
+            android:id="@+id/average"
+            tools:text="7.8"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/posterShow"
         android:layout_width="125dp"
         android:layout_height="175dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:src="@color/colorAccent"
+        android:src="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
