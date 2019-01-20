@@ -1,5 +1,6 @@
 package com.albuquerque.tvshow.modules.shows.model
 
+import com.albuquerque.tvshow.core.extensions.toBrazilianDate
 import com.albuquerque.tvshow.core.network.BaseNetwork.Companion.BASE_IMAGE_URL
 import com.google.gson.annotations.SerializedName
 
@@ -14,6 +15,7 @@ class Show {
 
     @SerializedName("first_air_date")
     var firstAirDate: String = ""
+        get() = field.toBrazilianDate()
 
     @SerializedName("backdrop_path")
     var backdropPath: String = ""
@@ -27,5 +29,9 @@ class Show {
 
     @SerializedName("vote_average")
     var average: Double = 0.0
+
+    @SerializedName("created_by")
+    var directors: List<Director> = mutableListOf()
+
 
 }

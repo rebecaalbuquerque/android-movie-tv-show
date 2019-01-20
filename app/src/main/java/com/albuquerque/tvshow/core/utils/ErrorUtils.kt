@@ -1,11 +1,11 @@
-package com.albuquerque.tvshow.modules.auth.utils
+package com.albuquerque.tvshow.core.utils
 
 import com.albuquerque.tvshow.modules.auth.model.AuthResponse
 import com.google.gson.Gson
 import retrofit2.HttpException
 import java.net.UnknownHostException
 
-object AuthUtils {
+object ErrorUtils {
 
     fun geErrorMessage(exception: Throwable): String? {
 

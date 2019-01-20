@@ -2,10 +2,23 @@ package com.albuquerque.tvshow.modules.shows.business
 
 import com.albuquerque.tvshow.core.business.BaseBusiness
 import com.albuquerque.tvshow.modules.shows.model.Category
+import com.albuquerque.tvshow.modules.shows.model.Image
+import com.albuquerque.tvshow.modules.shows.model.Picture
 import com.albuquerque.tvshow.modules.shows.model.Show
 import com.albuquerque.tvshow.modules.shows.network.ShowNetwork
 
 object ShowsBusiness : BaseBusiness() {
+
+    fun getPictures(id: Int, onSuccess: (images: List<Image>) -> Unit, onError: (error: Throwable) -> Unit){
+        ShowNetwork.fetchPictures(id,
+                {
+                    onSuccess(it.backdrops)
+                },
+                {
+                    onError(it)
+                }
+        )
+    }
 
     fun getShow(id: Int, onSuccess: (show: Show) -> Unit, onError: (error: Throwable) -> Unit){
         ShowNetwork.fetchShow(id,

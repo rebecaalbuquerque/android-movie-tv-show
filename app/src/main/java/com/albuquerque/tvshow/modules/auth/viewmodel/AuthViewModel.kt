@@ -7,7 +7,7 @@ import com.albuquerque.tvshow.core.livedata.SingleLiveEvent
 import com.albuquerque.tvshow.modules.auth.business.AuthBusiness
 import com.albuquerque.tvshow.modules.auth.database.AuthDatabase
 import com.albuquerque.tvshow.modules.auth.model.User
-import com.albuquerque.tvshow.modules.auth.utils.AuthUtils
+import com.albuquerque.tvshow.core.utils.ErrorUtils
 
 class AuthViewModel : ViewModel() {
 
@@ -50,7 +50,7 @@ class AuthViewModel : ViewModel() {
                 },
 
                 onError = { error ->
-                    onError.value = AuthUtils.geErrorMessage(error) ?: "Erro!!!"
+                    onError.value = ErrorUtils.geErrorMessage(error) ?: "Erro!!!"
                     onError.call()
                 }
         )
@@ -64,7 +64,7 @@ class AuthViewModel : ViewModel() {
                     onLogoutSucess.call()
                 },
                 { error ->
-                    onError.value = AuthUtils.geErrorMessage(error) ?: "Erro!!!"
+                    onError.value = ErrorUtils.geErrorMessage(error) ?: "Erro!!!"
                     onError.call()
                 }
         )

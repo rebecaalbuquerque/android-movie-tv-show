@@ -4,8 +4,9 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.albuquerque.tvshow.core.livedata.SingleLiveEvent
-import com.albuquerque.tvshow.modules.auth.utils.AuthUtils
+import com.albuquerque.tvshow.core.utils.ErrorUtils
 import com.albuquerque.tvshow.modules.shows.business.ShowsBusiness
+import com.albuquerque.tvshow.modules.shows.model.Image
 import com.albuquerque.tvshow.modules.shows.model.Show
 
 class ShowViewModel(var id: Int): ViewModel() {
@@ -13,6 +14,7 @@ class ShowViewModel(var id: Int): ViewModel() {
     var onError = SingleLiveEvent<String>()
 
     lateinit var show: MutableLiveData<Show>
+    lateinit var pictures: MutableLiveData<List<Image>>
 
     fun getShow(): LiveData<Show> {
 
@@ -24,7 +26,7 @@ class ShowViewModel(var id: Int): ViewModel() {
                         show.value = it
                     },
                     {
-                        onError.value = AuthUtils.geErrorMessage(it) ?: "Erro!!"
+                        onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro!!"
                         onError.call()
                     }
             )
@@ -32,6 +34,25 @@ class ShowViewModel(var id: Int): ViewModel() {
         }
 
         return show
+    }
+
+    fun getShowPictures(): MutableLiveData<List<Image>>{
+        if(!::pictures.isInitialized){
+            pictures = MutableLiveData()
+
+            ShowsBusiness.getPictures(id,
+                    {
+                        pictures.value = it
+                    },
+                    {
+                        onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro!!"
+                        onError.call()
+                    }
+            )
+
+        }
+
+        return pictures
     }
 
 }

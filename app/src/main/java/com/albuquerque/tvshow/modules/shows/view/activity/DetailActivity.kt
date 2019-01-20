@@ -5,14 +5,17 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
+import com.albuquerque.tvshow.modules.shows.adapter.ImageAdapter
+import com.albuquerque.tvshow.modules.shows.model.Director
 import com.albuquerque.tvshow.modules.shows.viewmodel.ShowViewModel
 import com.albuquerque.tvshow.modules.shows.viewmodel.ShowViewModelFactory
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
-import kotlinx.android.synthetic.main.content_detail.view.*
 
 class DetailActivity : AppCompatActivity() {
 
@@ -22,10 +25,13 @@ class DetailActivity : AppCompatActivity() {
 
     private var showID = -1
     private lateinit var showViewModel: ShowViewModel
+    private lateinit var picturesAdapter: ImageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+
+        showProgressBar()
 
         showID = intent.getIntExtra(SHOW_ID, -1)
 
@@ -34,9 +40,10 @@ class DetailActivity : AppCompatActivity() {
                 ShowViewModelFactory(showID)).get(ShowViewModel::class.java
         )
 
+        subscribeUI()
         setupToolbar()
         setupFab()
-        subscribeUI()
+        setupRecyclerView()
 
     }
 
@@ -63,12 +70,65 @@ class DetailActivity : AppCompatActivity() {
 
             getShow().observe(this@DetailActivity, Observer {  show ->
                 show?.let {
+                    hideProgressBar()
+
+                    Picasso.get().load(show.backdropPath).into(expandedImage)
                     toolbar_layout.title = show.name
                     overview.text = show.overview
-                    Picasso.get().load(show.backdropPath).into(expandedImage)
+                    createdBy.text = getDirectorsName(show.directors)
+                    firstAirDate.text = show.firstAirDate
+                }
+            })
+
+            getShowPictures().observe(this@DetailActivity, Observer { pictures ->
+                pictures?.let {
+                    picturesAdapter.refresh(it)
                 }
             })
 
         }
+    }
+
+    private fun showProgressBar(){
+        progressDetail.visibility = VISIBLE
+        overview.visibility = GONE
+        informations.visibility = GONE
+        rvPictures.visibility = GONE
+    }
+
+    private fun hideProgressBar(){
+        progressDetail.visibility = GONE
+        overview.visibility = VISIBLE
+        informations.visibility = VISIBLE
+        rvPictures.visibility = VISIBLE
+    }
+
+    private fun setupRecyclerView() {
+        picturesAdapter = ImageAdapter()
+        rvPictures.adapter = picturesAdapter
+    }
+
+    private fun getDirectorsName(directors: List<Director>): String {
+
+        var result = ""
+
+        when(directors.size){
+            0 -> result = "N/I"
+
+            1 -> result = directors[0].name
+
+            else -> {
+
+                for(i in 0 until directors.size - 2){
+                    result += directors[i].name + ", "
+                }
+
+                result += directors[directors.size-1].name
+
+            }
+        }
+
+        return result
+
     }
 }

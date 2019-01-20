@@ -2,11 +2,18 @@ package com.albuquerque.tvshow.modules.shows.network
 
 import com.albuquerque.tvshow.core.network.BaseNetwork
 import com.albuquerque.tvshow.modules.shows.model.Category
+import com.albuquerque.tvshow.modules.shows.model.Picture
 import com.albuquerque.tvshow.modules.shows.model.Show
 
 object ShowNetwork: BaseNetwork() {
 
     private val api by lazy { getRetrofitBuilder().build().create(ShowAPI::class.java) }
+
+    fun fetchPictures(id: Int, onSuccess: (picture: Picture) -> Unit, onError: (error: Throwable) -> Unit){
+        doRequest(api, onSuccess, onError){
+            fetchPictures(id, API_KEY)
+        }
+    }
 
     fun fetchShow(id: Int, onSuccess: (show: Show) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){

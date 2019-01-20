@@ -11,4 +11,6 @@
 
     <string name="action_settings">Configurações</string>
     <string name="btn_tentar_novamente">Tentar novamente</string>
+    <string name="lbl_criadores">Criadores</string>
+    <string name="lbl_first_air_date">Primeira exibição</string>
 </resources>
