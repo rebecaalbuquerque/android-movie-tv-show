@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
 import com.albuquerque.tvshow.modules.shows.adapter.ChannelAdapter
@@ -55,14 +56,19 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupFab(){
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        fab.setOnClickListener {
+            showViewModel.handleFavoriteClick()
         }
     }
 
     private fun subscribeUI() {
         with(showViewModel){
+
+            onFavorite.observe(this@DetailActivity, Observer { msg ->
+                msg?.let {
+                    Toast.makeText(this@DetailActivity, it, Toast.LENGTH_LONG).show()
+                }
+            })
 
             onError.observe(this@DetailActivity, Observer { error ->
                 error?.let {

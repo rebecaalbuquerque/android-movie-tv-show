@@ -51,7 +51,7 @@ object AuthBusiness {
     }
 
     fun doLogout(onSuccess: () -> Unit, onError: (msg: Throwable) -> Unit){
-        AuthNetwork.requestDeleteSession(AuthDatabase.getSessionId(),
+        AuthNetwork.requestDeleteSession(getSessionId(),
                 {
                     onSuccess()
                 },
@@ -65,4 +65,7 @@ object AuthBusiness {
         return AuthDatabase.getUserGravatarHash()
     }
 
+    fun getSessionId(): String = AuthDatabase.getSessionIdFromDB()
+
+    fun getUser(): User? = AuthDatabase.getUserFromDB()
 }

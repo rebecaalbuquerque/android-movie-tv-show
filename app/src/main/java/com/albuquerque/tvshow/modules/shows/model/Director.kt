@@ -1,6 +1,8 @@
 package com.albuquerque.tvshow.modules.shows.model
 
-class Director {
+import io.realm.RealmObject
+
+open class Director: RealmObject() {
 
     var id: Int = 0
 

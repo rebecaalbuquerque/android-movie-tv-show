@@ -4,10 +4,10 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.albuquerque.tvshow.core.livedata.SingleLiveEvent
+import com.albuquerque.tvshow.core.utils.ErrorUtils
 import com.albuquerque.tvshow.modules.auth.business.AuthBusiness
 import com.albuquerque.tvshow.modules.auth.database.AuthDatabase
 import com.albuquerque.tvshow.modules.auth.model.User
-import com.albuquerque.tvshow.core.utils.ErrorUtils
 
 class AuthViewModel : ViewModel() {
 
@@ -19,7 +19,7 @@ class AuthViewModel : ViewModel() {
     private lateinit var user: MutableLiveData<User>
 
     init {
-        if(AuthDatabase.getSessionId().isNotBlank())
+        if(AuthBusiness.getSessionId().isNotBlank())
             onUserLogged.call()
     }
 
@@ -34,7 +34,7 @@ class AuthViewModel : ViewModel() {
     fun getLoggedUser(): LiveData<User>{
         if (!::user.isInitialized) {
             user = MutableLiveData()
-            user.value = AuthDatabase.getUser()
+            user.value = AuthBusiness.getUser()
         }
 
         return user

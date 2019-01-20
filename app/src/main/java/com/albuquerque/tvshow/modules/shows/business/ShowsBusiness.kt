@@ -1,13 +1,29 @@
 package com.albuquerque.tvshow.modules.shows.business
 
 import com.albuquerque.tvshow.core.business.BaseBusiness
+import com.albuquerque.tvshow.modules.auth.business.AuthBusiness
+import com.albuquerque.tvshow.modules.auth.model.AuthResponse
+import com.albuquerque.tvshow.modules.shows.database.ShowDatabase
 import com.albuquerque.tvshow.modules.shows.model.Category
+import com.albuquerque.tvshow.modules.shows.model.Favorite
 import com.albuquerque.tvshow.modules.shows.model.Image
-import com.albuquerque.tvshow.modules.shows.model.Picture
 import com.albuquerque.tvshow.modules.shows.model.Show
 import com.albuquerque.tvshow.modules.shows.network.ShowNetwork
 
 object ShowsBusiness : BaseBusiness() {
+
+    fun markAsFavorite(show: Show, onSuccess: (response: AuthResponse) -> Unit, onError: (error: Throwable) -> Unit){
+        val user = AuthBusiness.getUser()!!
+
+        ShowNetwork.postAsFavorite(user.id, Favorite("tv", show.id, show.isFavorite), user.sessionId,
+                {
+                    onSuccess(it)
+                },
+                {
+                    onError(it)
+                }
+        )
+    }
 
     fun getPictures(id: Int, onSuccess: (images: List<Image>) -> Unit, onError: (error: Throwable) -> Unit){
         ShowNetwork.fetchPictures(id,

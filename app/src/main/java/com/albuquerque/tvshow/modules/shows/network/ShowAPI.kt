@@ -1,14 +1,23 @@
 package com.albuquerque.tvshow.modules.shows.network
 
+import com.albuquerque.tvshow.modules.auth.model.AuthResponse
 import com.albuquerque.tvshow.modules.shows.model.Category
+import com.albuquerque.tvshow.modules.shows.model.Favorite
 import com.albuquerque.tvshow.modules.shows.model.Picture
 import com.albuquerque.tvshow.modules.shows.model.Show
 import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ShowAPI {
+
+    @POST("account/{account_id}/favorite")
+    fun postFavorite(
+            @Path("account_id") accountId: Int,
+            @Body favorite: Favorite,
+            @Query("session_id") sessionId: String,
+            @Query("api_key") apiKey: String,
+            @Query("language") language: String? = null
+    ): Observable<AuthResponse>
 
     @GET("tv/{id}/images")
     fun fetchPictures(

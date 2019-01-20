@@ -3,9 +3,13 @@ package com.albuquerque.tvshow.modules.shows.model
 import com.albuquerque.tvshow.core.extensions.toBrazilianDate
 import com.albuquerque.tvshow.core.network.BaseNetwork.Companion.BASE_IMAGE_URL
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmList
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
-class Show {
+open class Show: RealmObject() {
 
+    @PrimaryKey
     var id: Int = 0
 
     @SerializedName("original_name")
@@ -34,19 +38,15 @@ class Show {
     var average: Double = 0.0
 
     @SerializedName("created_by")
-    var directors: List<Director> = mutableListOf()
+    var directors: RealmList<Director> = RealmList()
 
-    var networks: List<Channel> = mutableListOf()
+    var networks: RealmList<Channel> = RealmList()
 
     @SerializedName("number_of_seasons")
     var seasons: Int = 0
 
+    var isFavorite: Boolean = false
+
 
 }
 
-class NextEpisode{
-
-    @SerializedName("air_date")
-    var airDate: String = ""
-        get() = field.toBrazilianDate()
-}
