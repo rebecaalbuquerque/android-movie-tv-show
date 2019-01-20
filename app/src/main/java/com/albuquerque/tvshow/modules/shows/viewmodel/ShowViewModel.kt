@@ -13,7 +13,7 @@ import com.albuquerque.tvshow.modules.shows.model.Show
 class ShowViewModel(var id: Int): ViewModel() {
 
     var onError = SingleLiveEvent<String>()
-    var onFavorite = SingleLiveEvent<String>()
+    var onFavorite = SingleLiveEvent<Show>()
 
     lateinit var show: MutableLiveData<Show>
     lateinit var pictures: MutableLiveData<List<Image>>
@@ -25,6 +25,7 @@ class ShowViewModel(var id: Int): ViewModel() {
 
             ShowsBusiness.getShow(id,
                     {
+                        it.isFavorite = ShowsBusiness.isShowFavorite(id)
                         show.value = it
                     },
                     {
@@ -67,12 +68,12 @@ class ShowViewModel(var id: Int): ViewModel() {
                     {
                         if(s.isFavorite) {
                             ShowDatabase.salveOrUpdateAsync(s, onNext = {
-                                onFavorite.value = it.statusMessage
+                                onFavorite.value = s
                                 onFavorite.call()
                             })
                         } else {
                             ShowDatabase.removeFavorite(s.id)
-                            onFavorite.value = it.statusMessage
+                            onFavorite.value = s
                             onFavorite.call()
                         }
 

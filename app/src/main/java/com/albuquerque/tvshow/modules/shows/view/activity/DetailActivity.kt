@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
 
+
 class DetailActivity : AppCompatActivity() {
 
     companion object {
@@ -64,9 +65,15 @@ class DetailActivity : AppCompatActivity() {
     private fun subscribeUI() {
         with(showViewModel){
 
-            onFavorite.observe(this@DetailActivity, Observer { msg ->
-                msg?.let {
-                    Toast.makeText(this@DetailActivity, it, Toast.LENGTH_LONG).show()
+            onFavorite.observe(this@DetailActivity, Observer { show ->
+                show?.let {
+                    if(show.isFavorite) {
+                        fab.setImageResource(R.drawable.ic_full_star)
+                        Toast.makeText(this@DetailActivity, "Adicionado aos favoritos", Toast.LENGTH_LONG).show()
+                    } else {
+                        fab.setImageResource(R.drawable.ic_empty_star)
+                        Toast.makeText(this@DetailActivity, "Removido dos favoritos", Toast.LENGTH_LONG).show()
+                    }
                 }
             })
 
@@ -89,6 +96,12 @@ class DetailActivity : AppCompatActivity() {
                     firstAirDate.text   = show.firstAirDate
                     nextAirDate.text    = show.nextEpisode?.airDate ?: "N/I"
                     seasons.text        = show.seasons.toString()
+
+                    if(show.isFavorite) {
+                        fab.setImageResource(R.drawable.ic_full_star)
+                    } else {
+                        fab.setImageResource(R.drawable.ic_empty_star)
+                    }
                 }
             })
 

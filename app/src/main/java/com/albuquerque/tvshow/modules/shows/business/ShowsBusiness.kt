@@ -12,6 +12,10 @@ import com.albuquerque.tvshow.modules.shows.network.ShowNetwork
 
 object ShowsBusiness : BaseBusiness() {
 
+    fun isShowFavorite(showId: Int): Boolean{
+        return ShowDatabase.getShowFromDB(showId) != null
+    }
+
     fun markAsFavorite(show: Show, onSuccess: (response: AuthResponse) -> Unit, onError: (error: Throwable) -> Unit){
         val user = AuthBusiness.getUser()!!
 

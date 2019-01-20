@@ -14,4 +14,6 @@ object ShowDatabase: BaseDatabase() {
         }
     }
 
+    fun getShowFromDB(id: Int): Show? = Realm.getDefaultInstance().where(Show::class.java).equalTo(Show::id.name, id).findFirst()
+
 }
