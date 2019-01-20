@@ -9,6 +9,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
+import com.albuquerque.tvshow.modules.shows.adapter.ChannelAdapter
 import com.albuquerque.tvshow.modules.shows.adapter.ImageAdapter
 import com.albuquerque.tvshow.modules.shows.model.Director
 import com.albuquerque.tvshow.modules.shows.viewmodel.ShowViewModel
@@ -26,6 +27,7 @@ class DetailActivity : AppCompatActivity() {
     private var showID = -1
     private lateinit var showViewModel: ShowViewModel
     private lateinit var picturesAdapter: ImageAdapter
+    private lateinit var channelsAdapter: ChannelAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,9 +76,13 @@ class DetailActivity : AppCompatActivity() {
 
                     Picasso.get().load(show.backdropPath).into(expandedImage)
                     toolbar_layout.title = show.name
-                    overview.text = show.overview
-                    createdBy.text = getDirectorsName(show.directors)
-                    firstAirDate.text = show.firstAirDate
+
+                    channelsAdapter.refresh(show.networks)
+                    overview.text       = show.overview
+                    createdBy.text      = getDirectorsName(show.directors)
+                    firstAirDate.text   = show.firstAirDate
+                    nextAirDate.text    = show.nextEpisode?.airDate ?: "N/I"
+                    seasons.text        = show.seasons.toString()
                 }
             })
 
@@ -91,21 +97,20 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showProgressBar(){
         progressDetail.visibility = VISIBLE
-        overview.visibility = GONE
-        informations.visibility = GONE
-        rvPictures.visibility = GONE
+        contentInformations.visibility = GONE
     }
 
     private fun hideProgressBar(){
         progressDetail.visibility = GONE
-        overview.visibility = VISIBLE
-        informations.visibility = VISIBLE
-        rvPictures.visibility = VISIBLE
+        contentInformations.visibility = VISIBLE
     }
 
     private fun setupRecyclerView() {
         picturesAdapter = ImageAdapter()
         rvPictures.adapter = picturesAdapter
+
+        channelsAdapter = ChannelAdapter()
+        rvChannels.adapter = channelsAdapter
     }
 
     private fun getDirectorsName(directors: List<Director>): String {

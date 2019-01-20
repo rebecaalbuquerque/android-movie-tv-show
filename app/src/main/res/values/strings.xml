@@ -13,4 +13,10 @@
     <string name="btn_tentar_novamente">Tentar novamente</string>
     <string name="lbl_criadores">Criadores</string>
     <string name="lbl_first_air_date">Primeira exibição</string>
+    <string name="lbl_overview">Descrição</string>
+    <string name="lbl_channel">Canal de exibição</string>
+    <string name="lbl_informations">Informações</string>
+    <string name="lbl_pictures">Imagens</string>
+    <string name="lbl_next_air_date">Próxima exibição</string>
+    <string name="lbl_seasons">Temporadas</string>
 </resources>

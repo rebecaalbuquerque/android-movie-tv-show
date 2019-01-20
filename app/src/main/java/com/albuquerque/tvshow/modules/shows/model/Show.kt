@@ -17,6 +17,9 @@ class Show {
     var firstAirDate: String = ""
         get() = field.toBrazilianDate()
 
+    @SerializedName("next_episode_to_air")
+    var nextEpisode: NextEpisode? = null
+
     @SerializedName("backdrop_path")
     var backdropPath: String = ""
         get() = BASE_IMAGE_URL + field
@@ -33,5 +36,17 @@ class Show {
     @SerializedName("created_by")
     var directors: List<Director> = mutableListOf()
 
+    var networks: List<Channel> = mutableListOf()
 
+    @SerializedName("number_of_seasons")
+    var seasons: Int = 0
+
+
+}
+
+class NextEpisode{
+
+    @SerializedName("air_date")
+    var airDate: String = ""
+        get() = field.toBrazilianDate()
 }
