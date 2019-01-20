@@ -4,8 +4,25 @@ import com.albuquerque.tvshow.core.network.BaseNetwork
 import com.albuquerque.tvshow.modules.auth.database.AuthDatabase
 import com.albuquerque.tvshow.modules.auth.model.User
 import com.albuquerque.tvshow.modules.auth.network.AuthNetwork
+import com.albuquerque.tvshow.modules.shows.database.ShowDatabase
 
 object AuthBusiness {
+
+    fun getFavoritesFromAPI(onSuccess: () -> Unit, onError: (msg: Throwable) -> Unit){
+        val user = getUser()!!
+
+        AuthNetwork.requestUserFavorites(user.id, user.sessionId,
+                {
+
+                    ShowDatabase.salveOrUpdateAll(it.list.toMutableList(), onNext = {
+                        onSuccess()
+                    })
+                },
+                {
+                    onError(it)
+                }
+        )
+    }
 
     fun doLogin(username: String, password: String, onSuccess: (user: User)-> Unit, onError: (msg: Throwable) -> Unit){
         var sessionId: String

@@ -2,24 +2,23 @@ package com.albuquerque.tvshow.modules.auth.network
 
 import com.albuquerque.tvshow.core.network.BaseNetwork
 import com.albuquerque.tvshow.modules.auth.model.AuthResponse
+import com.albuquerque.tvshow.modules.auth.model.Favorites
 import com.albuquerque.tvshow.modules.auth.model.User
 
 object AuthNetwork: BaseNetwork() {
 
-    /*val client = OkHttpClient().interceptors().add(Interceptor { chain ->
-        var request = chain.request()
-        val url = request.url().newBuilder().addQueryParameter("api_key", API_KEY).build()
-        request = request.newBuilder().url(url).build()
-
-        chain.proceed(request)
-    })*/
-
     private val api by lazy { getRetrofitBuilder().build().create(AuthAPI::class.java) }
+
+    fun requestUserFavorites(accountId: Int, sessionId: String, onSuccess: (favorites: Favorites) -> Unit, onError: (error: Throwable) -> Unit ){
+        doRequest(api, onSuccess, onError){
+            fetchUserFavoritesShows(accountId, API_KEY, sessionId)
+        }
+    }
 
     // Login
     fun requestToken(onSuccess: (response: AuthResponse) -> Unit, onError: (error: Throwable) -> Unit ){
 
-        doRequest<AuthResponse, AuthAPI>(api, onSuccess, onError) {
+        doRequest(api, onSuccess, onError) {
             fetchRequestToken(API_KEY)
         }
 

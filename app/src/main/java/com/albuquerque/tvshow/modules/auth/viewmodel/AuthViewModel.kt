@@ -46,6 +46,11 @@ class AuthViewModel : ViewModel() {
 
                 onSuccess = { it ->
                     AuthDatabase.saveOrUpdate(it)
+
+                    AuthBusiness.getFavoritesFromAPI({},{
+                        onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro getFavorites"
+                    })
+
                     onLoginSucess.call()
                 },
 

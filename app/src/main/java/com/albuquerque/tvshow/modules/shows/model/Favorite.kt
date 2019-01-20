@@ -1,8 +1,12 @@
 package com.albuquerque.tvshow.modules.shows.model
 
 import com.google.gson.annotations.SerializedName
+import io.realm.annotations.PrimaryKey
 
-class Favorite() {
+class Favorite(){
+
+    @PrimaryKey
+    var id: Int = 0
 
     @SerializedName("media_type")
     var mediaType: String = ""

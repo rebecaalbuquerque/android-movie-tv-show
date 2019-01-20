@@ -1,11 +1,19 @@
 package com.albuquerque.tvshow.modules.auth.network
 
 import com.albuquerque.tvshow.modules.auth.model.AuthResponse
+import com.albuquerque.tvshow.modules.auth.model.Favorites
 import com.albuquerque.tvshow.modules.auth.model.User
 import io.reactivex.Observable
 import retrofit2.http.*
 
 interface AuthAPI {
+
+    @GET("account/{account_id}/favorite/tv")
+    fun fetchUserFavoritesShows(
+            @Path("account_id") accountId: Int,
+            @Query("api_key") apiKey: String,
+            @Query("session_id") sessionId: String
+    ): Observable<Favorites>
 
     @GET("authentication/token/new")
     fun fetchRequestToken(
