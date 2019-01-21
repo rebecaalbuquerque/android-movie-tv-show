@@ -4,12 +4,12 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
+import com.albuquerque.tvshow.core.view.activity.BaseActivity
 import com.albuquerque.tvshow.modules.shows.adapter.ChannelAdapter
 import com.albuquerque.tvshow.modules.shows.adapter.ImageAdapter
 import com.albuquerque.tvshow.modules.shows.model.Director
@@ -19,8 +19,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
 
-
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : BaseActivity() {
 
     companion object {
         const val SHOW_ID = "SHOW_ID"
@@ -30,6 +29,9 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var showViewModel: ShowViewModel
     private lateinit var picturesAdapter: ImageAdapter
     private lateinit var channelsAdapter: ChannelAdapter
+
+    private var oldFavoriteValue = false
+    private var newFavoriteValue = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +53,15 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+
+        if(showID != -1 && (oldFavoriteValue != newFavoriteValue)){
+            setResult(111)
+        }
+
+        super.onBackPressed()
+    }
+
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -68,9 +79,11 @@ class DetailActivity : AppCompatActivity() {
             onFavorite.observe(this@DetailActivity, Observer { show ->
                 show?.let {
                     if(show.isFavorite) {
+                        newFavoriteValue = true
                         fab.setImageResource(R.drawable.ic_full_star)
                         Toast.makeText(this@DetailActivity, "Adicionado aos favoritos", Toast.LENGTH_LONG).show()
                     } else {
+                        newFavoriteValue = false
                         fab.setImageResource(R.drawable.ic_empty_star)
                         Toast.makeText(this@DetailActivity, "Removido dos favoritos", Toast.LENGTH_LONG).show()
                     }
@@ -85,6 +98,8 @@ class DetailActivity : AppCompatActivity() {
 
             getShow().observe(this@DetailActivity, Observer {  show ->
                 show?.let {
+                    oldFavoriteValue = show.isFavorite
+                    newFavoriteValue = show.isFavorite
                     hideProgressBar()
 
                     Picasso.get().load(show.backdropPath).into(expandedImage)

@@ -2,6 +2,7 @@ package com.albuquerque.tvshow.modules.shows.view.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
@@ -9,7 +10,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
 import com.albuquerque.tvshow.core.view.fragment.BaseFragment
@@ -20,7 +20,7 @@ import com.albuquerque.tvshow.modules.shows.view.activity.DetailActivity.Compani
 import com.albuquerque.tvshow.modules.shows.viewmodel.CategoryViewModel
 import kotlinx.android.synthetic.main.fragment_shows.*
 import org.greenrobot.eventbus.Subscribe
-import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.startActivityForResult
 
 class ShowsFragment : BaseFragment() {
 
@@ -42,14 +42,21 @@ class ShowsFragment : BaseFragment() {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode == 111){
+            categoryAdapter.notifyDataSetChanged()
+        }
+
+    }
+
     private fun setupAdapter(){
         categoryAdapter = CategoryAdapter()
         rvCategories.adapter = categoryAdapter
     }
 
     private fun subscribeUI(){
-
-        //btnTentarNovamente.setOnClickListener { categoryViewModel.getCategoriesAgain() }
 
         with(categoryViewModel){
 
@@ -75,12 +82,11 @@ class ShowsFragment : BaseFragment() {
         progressShows.visibility = GONE
         rvCategories.visibility = GONE
         errorIcon.visibility = VISIBLE
-        //btnTentarNovamente.visibility = VISIBLE
     }
 
     @Subscribe
     fun onEvent(event: OnShowClicked) {
-        startActivity<DetailActivity>(SHOW_ID to event.show.id)
+        startActivityForResult<DetailActivity>(111, SHOW_ID to event.show.id)
     }
 
 }

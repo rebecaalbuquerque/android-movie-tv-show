@@ -73,6 +73,7 @@ class ShowViewModel(var id: Int): ViewModel() {
                             })
                         } else {
                             ShowDatabase.removeFavorite(s.id)
+
                             onFavorite.value = s
                             onFavorite.call()
                         }
