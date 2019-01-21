@@ -12,9 +12,11 @@ object AuthBusiness {
         val user = getUser()!!
 
         AuthNetwork.requestUserFavorites(user.id, user.sessionId,
-                {
+                { favorites ->
 
-                    ShowDatabase.salveOrUpdateAll(it.list.toMutableList(), onNext = {
+                    favorites.list.forEach { it.isFavorite = true }
+
+                    ShowDatabase.salveOrUpdateAll(favorites.list.toMutableList(), onNext = {
                         onSuccess()
                     })
                 },

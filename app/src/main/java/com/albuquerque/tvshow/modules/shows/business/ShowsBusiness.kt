@@ -54,6 +54,11 @@ object ShowsBusiness : BaseBusiness() {
     fun getCategories(onSuccess: (categories: List<Category>) -> Unit, onError: (error: Throwable) -> Unit) {
         val result = mutableListOf<Category>()
 
+        with(ShowDatabase.getFavorites()){
+            if(this.isNotEmpty())
+                result.add(Category("Favoritas", this))
+        }
+
         getAiringTodayFromAPI({ today ->
 
             result.add(Category("Em exibição hoje", today))
