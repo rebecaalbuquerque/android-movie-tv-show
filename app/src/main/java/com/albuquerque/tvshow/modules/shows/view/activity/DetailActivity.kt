@@ -9,13 +9,13 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
+import com.albuquerque.tvshow.core.utils.GlideApp
 import com.albuquerque.tvshow.core.view.activity.BaseActivity
 import com.albuquerque.tvshow.modules.shows.adapter.ChannelAdapter
 import com.albuquerque.tvshow.modules.shows.adapter.ImageAdapter
 import com.albuquerque.tvshow.modules.shows.model.Director
 import com.albuquerque.tvshow.modules.shows.viewmodel.ShowViewModel
 import com.albuquerque.tvshow.modules.shows.viewmodel.ShowViewModelFactory
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
 
@@ -102,7 +102,12 @@ class DetailActivity : BaseActivity() {
                     newFavoriteValue = show.isFavorite
                     hideProgressBar()
 
-                    Picasso.get().load(show.backdropPath).into(expandedImage)
+                    GlideApp
+                            .with(this@DetailActivity)
+                            .load(show.backdropPath)
+                            .placeholder(R.drawable.placeholder_image)
+                            .into(expandedImage)
+
                     toolbar_layout.title = show.name
 
                     channelsAdapter.refresh(show.networks)
