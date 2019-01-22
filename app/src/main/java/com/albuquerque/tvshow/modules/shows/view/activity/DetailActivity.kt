@@ -105,7 +105,6 @@ class DetailActivity : BaseActivity() {
                     GlideApp
                             .with(this@DetailActivity)
                             .load(show.backdropPath)
-                            .placeholder(R.drawable.placeholder_image)
                             .into(expandedImage)
 
                     toolbar_layout.title = show.name

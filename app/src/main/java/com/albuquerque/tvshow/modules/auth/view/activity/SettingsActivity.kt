@@ -73,6 +73,7 @@ class SettingsActivity : BaseActivity() {
                             .with(this@SettingsActivity)
                             .load(it.avatarUrl)
                             .placeholder(R.drawable.placeholder_image)
+                            .circleCrop()
                             .into(userPhoto)
 
                     progressSettings.visibility = GONE

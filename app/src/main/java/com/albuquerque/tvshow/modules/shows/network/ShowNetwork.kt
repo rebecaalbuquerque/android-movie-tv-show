@@ -17,31 +17,31 @@ object ShowNetwork: BaseNetwork() {
         }
     }
 
-    fun fetchPictures(id: Int, onSuccess: (picture: Picture) -> Unit, onError: (error: Throwable) -> Unit){
+    fun requestPictures(id: Int, onSuccess: (picture: Picture) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
             fetchPictures(id, API_KEY)
         }
     }
 
-    fun fetchShow(id: Int, onSuccess: (show: Show) -> Unit, onError: (error: Throwable) -> Unit){
+    fun requestShow(id: Int, onSuccess: (show: Show) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
             fetchShow(id, API_KEY)
         }
     }
 
-    fun fetchAiringToday(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
+    fun requestAiringToday(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
             fetchAiringToday(API_KEY)
         }
     }
 
-    fun fetchPopular(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
+    fun requestPopular(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
             fetchPopular(API_KEY)
         }
     }
 
-    fun fetchTopRated(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
+    fun requestTopRated(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
             fetchTopRated(API_KEY)
         }

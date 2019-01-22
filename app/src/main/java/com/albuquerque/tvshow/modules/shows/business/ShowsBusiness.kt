@@ -30,7 +30,7 @@ object ShowsBusiness : BaseBusiness() {
     }
 
     fun getPictures(id: Int, onSuccess: (images: List<Image>) -> Unit, onError: (error: Throwable) -> Unit){
-        ShowNetwork.fetchPictures(id,
+        ShowNetwork.requestPictures(id,
                 {
                     onSuccess(it.backdrops)
                 },
@@ -41,7 +41,7 @@ object ShowsBusiness : BaseBusiness() {
     }
 
     fun getShow(id: Int, onSuccess: (show: Show) -> Unit, onError: (error: Throwable) -> Unit){
-        ShowNetwork.fetchShow(id,
+        ShowNetwork.requestShow(id,
                 {
                     onSuccess(it)
                 },
@@ -85,7 +85,7 @@ object ShowsBusiness : BaseBusiness() {
 
     private fun getAiringTodayFromAPI(onSuccess: (shows: List<Show>) -> Unit, onError: (error: Throwable) -> Unit) {
 
-        ShowNetwork.fetchAiringToday(
+        ShowNetwork.requestAiringToday(
                 {
                     onSuccess(it.shows)
                 },
@@ -98,7 +98,7 @@ object ShowsBusiness : BaseBusiness() {
 
     private fun getPopular(onSuccess: (shows: List<Show>) -> Unit, onError: (error: Throwable) -> Unit) {
 
-        ShowNetwork.fetchPopular(
+        ShowNetwork.requestPopular(
                 {
                     onSuccess(it.shows)
                 },
@@ -111,7 +111,7 @@ object ShowsBusiness : BaseBusiness() {
 
     private fun getTopRated(onSuccess: (shows: List<Show>) -> Unit, onError: (error: Throwable) -> Unit) {
 
-        ShowNetwork.fetchTopRated(
+        ShowNetwork.requestTopRated(
                 {
                     onSuccess(it.shows)
                 },

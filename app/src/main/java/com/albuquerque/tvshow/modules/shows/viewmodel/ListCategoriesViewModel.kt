@@ -1,6 +1,5 @@
 package com.albuquerque.tvshow.modules.shows.viewmodel
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.albuquerque.tvshow.core.livedata.SingleLiveEvent
@@ -14,7 +13,7 @@ class ListCategoriesViewModel: ViewModel() {
 
     private lateinit var categories: MutableLiveData<List<Category>>
 
-    fun getCategories(): LiveData<List<Category>> {
+    fun getCategories(): MutableLiveData<List<Category>> {
 
         if (!::categories.isInitialized) {
             categories = MutableLiveData()
