@@ -56,7 +56,6 @@ class AuthViewModel : ViewModel() {
 
                 onError = { error ->
                     onError.value = ErrorUtils.geErrorMessage(error) ?: "Erro!!!"
-                    onError.call()
                 }
         )
 
@@ -70,7 +69,6 @@ class AuthViewModel : ViewModel() {
                 },
                 { error ->
                     onError.value = ErrorUtils.geErrorMessage(error) ?: "Erro!!!"
-                    onError.call()
                 }
         )
     }

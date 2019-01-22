@@ -17,14 +17,14 @@ import com.albuquerque.tvshow.modules.shows.adapter.CategoryAdapter
 import com.albuquerque.tvshow.modules.shows.event.OnShowClicked
 import com.albuquerque.tvshow.modules.shows.view.activity.DetailActivity
 import com.albuquerque.tvshow.modules.shows.view.activity.DetailActivity.Companion.SHOW_ID
-import com.albuquerque.tvshow.modules.shows.viewmodel.CategoryViewModel
+import com.albuquerque.tvshow.modules.shows.viewmodel.ListCategoriesViewModel
 import kotlinx.android.synthetic.main.fragment_shows.*
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.support.v4.startActivityForResult
 
 class ShowsFragment : BaseFragment() {
 
-    private lateinit var categoryViewModel: CategoryViewModel
+    private lateinit var categoryViewModel: ListCategoriesViewModel
     private lateinit var categoryAdapter: CategoryAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,7 +35,7 @@ class ShowsFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         progressShows.visibility = VISIBLE
-        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
+        categoryViewModel = ViewModelProviders.of(this).get(ListCategoriesViewModel::class.java)
 
         setupAdapter()
         subscribeUI()

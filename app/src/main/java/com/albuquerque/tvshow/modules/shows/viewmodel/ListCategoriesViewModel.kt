@@ -8,7 +8,7 @@ import com.albuquerque.tvshow.core.utils.ErrorUtils
 import com.albuquerque.tvshow.modules.shows.business.ShowsBusiness
 import com.albuquerque.tvshow.modules.shows.model.Category
 
-class CategoryViewModel: ViewModel() {
+class ListCategoriesViewModel: ViewModel() {
 
     var onError = SingleLiveEvent<String>()
 
@@ -23,8 +23,7 @@ class CategoryViewModel: ViewModel() {
                         categories.value = it
                     },
                     {
-                        onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro!!"
-                        onError.call()
+                        onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro getCategories"
                     }
             )
 
@@ -33,7 +32,5 @@ class CategoryViewModel: ViewModel() {
 
         return categories
     }
-
-    fun getCategoriesAgain(){ getCategories() }
 
 }

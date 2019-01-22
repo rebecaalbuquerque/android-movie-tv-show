@@ -30,7 +30,6 @@ class ShowViewModel(var id: Int): ViewModel() {
                     },
                     {
                         onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro!!"
-                        onError.call()
                     }
             )
 
@@ -49,7 +48,6 @@ class ShowViewModel(var id: Int): ViewModel() {
                     },
                     {
                         onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro!!"
-                        onError.call()
                     }
             )
 
@@ -69,19 +67,16 @@ class ShowViewModel(var id: Int): ViewModel() {
                         if(s.isFavorite) {
                             ShowDatabase.salveOrUpdateAsync(s, onNext = {
                                 onFavorite.value = s
-                                onFavorite.call()
                             })
                         } else {
                             ShowDatabase.removeFavorite(s.id)
 
                             onFavorite.value = s
-                            onFavorite.call()
                         }
 
                     },
                     {
                         onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro fav"
-                        onError.call()
                     }
             )
 
