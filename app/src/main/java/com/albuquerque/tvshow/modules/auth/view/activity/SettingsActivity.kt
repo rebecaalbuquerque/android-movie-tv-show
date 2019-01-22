@@ -9,10 +9,9 @@ import android.view.View.VISIBLE
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.setTitleAndBackButton
 import com.albuquerque.tvshow.core.extensions.showError
+import com.albuquerque.tvshow.core.utils.GlideApp
 import com.albuquerque.tvshow.core.view.activity.BaseActivity
 import com.albuquerque.tvshow.modules.auth.viewmodel.AuthViewModel
-import com.squareup.picasso.Picasso
-import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_settings.*
 import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.intentFor
@@ -69,7 +68,13 @@ class SettingsActivity : BaseActivity() {
                 user?.let {
                     name.text = it.name
                     username.text = it.username
-                    Picasso.get().load(it.avatarUrl).transform(CropCircleTransformation()).into(userPhoto)
+
+                    GlideApp
+                            .with(this@SettingsActivity)
+                            .load(it.avatarUrl)
+                            .placeholder(R.drawable.placeholder_image)
+                            .into(userPhoto)
+
                     progressSettings.visibility = GONE
                 }
             })

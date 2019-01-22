@@ -2,10 +2,10 @@ package com.albuquerque.tvshow.modules.shows.view.holder
 
 import android.view.View
 import com.albuquerque.tvshow.R
+import com.albuquerque.tvshow.core.utils.GlideApp
 import com.albuquerque.tvshow.core.view.holder.BaseViewHolder
 import com.albuquerque.tvshow.modules.shows.event.OnShowClicked
 import com.albuquerque.tvshow.modules.shows.model.Show
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_show.view.*
 import org.greenrobot.eventbus.EventBus
 
@@ -15,10 +15,11 @@ class MediaViewHolder(view: View): BaseViewHolder<Show>(view){
         with(itemView){
             titleShow.text = item.name
 
-            if(item.posterPath.isNotBlank())
-                Picasso.get().load(item.posterPath).into(posterShow)
-            else
-                posterShow.setImageResource(R.drawable.image_placeholder)
+            GlideApp
+                    .with(context)
+                    .load(item.posterPath)
+                    .placeholder(R.drawable.placeholder_image)
+                    .into(posterShow)
 
             average.text = item.average.toString()
 
@@ -28,5 +29,4 @@ class MediaViewHolder(view: View): BaseViewHolder<Show>(view){
 
         }
     }
-
 }
