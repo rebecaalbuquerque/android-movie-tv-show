@@ -1,4 +1,4 @@
-package com.albuquerque.tvshow.modules.shows.view.activity
+package com.albuquerque.tvshow.modules.home.view.activity
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -6,7 +6,7 @@ import android.view.Menu
 import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.openFragment
 import com.albuquerque.tvshow.core.view.activity.BaseActivity
-import com.albuquerque.tvshow.modules.shows.view.fragment.MoviesFragment
+import com.albuquerque.tvshow.modules.movies.view.fragment.MoviesFragment
 import com.albuquerque.tvshow.modules.shows.view.fragment.ShowsFragment
 import kotlinx.android.synthetic.main.activity_home.*
 

@@ -2,8 +2,12 @@ package com.albuquerque.tvshow.modules.shows.model
 
 import com.albuquerque.tvshow.core.network.BaseNetwork
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
+import io.realm.annotations.Ignore
 
-class Image{
+open class Image: RealmObject(){
+
+    @Ignore
     @SerializedName("file_path")
     var url: String = ""
         get() {
@@ -12,4 +16,25 @@ class Image{
             else
                 ""
         }
+
+    /**
+     * Logo do canal de exibição da série
+     * */
+    @SerializedName("logo_path")
+    var logo: String = ""
+        get() {
+            return if (field.isNotBlank())
+                BaseNetwork.BASE_IMAGE_URL + field
+            else
+                ""
+        }
+
+    /**
+     * Imagens da série
+     * */
+    @Ignore
+    var backdrops: List<Image> = mutableListOf()
+
+    @Ignore
+    var posters : List<Image> = mutableListOf()
 }

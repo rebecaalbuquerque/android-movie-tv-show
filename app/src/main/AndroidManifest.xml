@@ -28,7 +28,7 @@
         </activity>
 
         <activity
-            android:name=".modules.shows.view.activity.HomeActivity"
+            android:name=".modules.home.view.activity.HomeActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -38,13 +38,13 @@
         <activity
             android:label=""
             android:name=".modules.shows.view.activity.DetailActivity"
-            android:parentActivityName=".modules.shows.view.activity.HomeActivity"
+            android:parentActivityName=".modules.home.view.activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.albuquerque.tvshow.modules.shows.view.activity.HomeActivity" />
+                android:value="com.albuquerque.tvshow.modules.home.view.activity.HomeActivity" />
         </activity>
 
     </application>

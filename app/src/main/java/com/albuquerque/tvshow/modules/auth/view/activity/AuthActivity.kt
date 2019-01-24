@@ -10,7 +10,7 @@ import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
 import com.albuquerque.tvshow.core.view.activity.BaseActivity
 import com.albuquerque.tvshow.modules.auth.viewmodel.AuthViewModel
-import com.albuquerque.tvshow.modules.shows.view.activity.HomeActivity
+import com.albuquerque.tvshow.modules.home.view.activity.HomeActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 import org.jetbrains.anko.startActivity
 

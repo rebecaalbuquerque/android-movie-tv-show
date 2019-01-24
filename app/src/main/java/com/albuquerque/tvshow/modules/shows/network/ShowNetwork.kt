@@ -4,7 +4,7 @@ import com.albuquerque.tvshow.core.network.BaseNetwork
 import com.albuquerque.tvshow.modules.auth.model.AuthResponse
 import com.albuquerque.tvshow.modules.shows.model.Category
 import com.albuquerque.tvshow.modules.shows.model.Favorite
-import com.albuquerque.tvshow.modules.shows.model.Picture
+import com.albuquerque.tvshow.modules.shows.model.Image
 import com.albuquerque.tvshow.modules.shows.model.Show
 
 object ShowNetwork: BaseNetwork() {
@@ -17,7 +17,7 @@ object ShowNetwork: BaseNetwork() {
         }
     }
 
-    fun requestPictures(id: Int, onSuccess: (picture: Picture) -> Unit, onError: (error: Throwable) -> Unit){
+    fun requestPictures(id: Int, onSuccess: (picture: Image) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
             fetchPictures(id, API_KEY)
         }

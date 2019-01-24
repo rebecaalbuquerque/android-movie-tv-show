@@ -11,8 +11,9 @@ import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
 import com.albuquerque.tvshow.core.utils.GlideApp
 import com.albuquerque.tvshow.core.view.activity.BaseActivity
-import com.albuquerque.tvshow.modules.shows.adapter.ChannelAdapter
 import com.albuquerque.tvshow.modules.shows.adapter.ImageAdapter
+import com.albuquerque.tvshow.modules.shows.enum.TypeImage.CHANNEL
+import com.albuquerque.tvshow.modules.shows.enum.TypeImage.MEDIA_IMAGE
 import com.albuquerque.tvshow.modules.shows.model.Director
 import com.albuquerque.tvshow.modules.shows.viewmodel.ShowViewModel
 import com.albuquerque.tvshow.modules.shows.viewmodel.ShowViewModelFactory
@@ -28,7 +29,7 @@ class DetailActivity : BaseActivity() {
     private var showID = -1
     private lateinit var showViewModel: ShowViewModel
     private lateinit var picturesAdapter: ImageAdapter
-    private lateinit var channelsAdapter: ChannelAdapter
+    private lateinit var channelsAdapter: ImageAdapter
 
     private var oldFavoriteValue = false
     private var newFavoriteValue = false
@@ -110,6 +111,7 @@ class DetailActivity : BaseActivity() {
                     toolbar_layout.title = show.name
 
                     channelsAdapter.refresh(show.networks)
+
                     overview.text       = show.overview
                     createdBy.text      = getDirectorsName(show.directors)
                     firstAirDate.text   = show.firstAirDate
@@ -144,13 +146,14 @@ class DetailActivity : BaseActivity() {
     }
 
     private fun setupRecyclerView() {
-        picturesAdapter = ImageAdapter()
+        picturesAdapter = ImageAdapter(MEDIA_IMAGE)
         rvPictures.adapter = picturesAdapter
 
-        channelsAdapter = ChannelAdapter()
+        channelsAdapter = ImageAdapter(CHANNEL)
         rvChannels.adapter = channelsAdapter
     }
 
+    //TODO: colocar no business
     private fun getDirectorsName(directors: List<Director>): String {
 
         var result = ""

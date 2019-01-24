@@ -3,7 +3,7 @@ package com.albuquerque.tvshow.modules.shows.network
 import com.albuquerque.tvshow.modules.auth.model.AuthResponse
 import com.albuquerque.tvshow.modules.shows.model.Category
 import com.albuquerque.tvshow.modules.shows.model.Favorite
-import com.albuquerque.tvshow.modules.shows.model.Picture
+import com.albuquerque.tvshow.modules.shows.model.Image
 import com.albuquerque.tvshow.modules.shows.model.Show
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -24,7 +24,7 @@ interface ShowAPI {
             @Path("id") id: Int,
             @Query("api_key") apiKey: String,
             @Query("language") language: String? = null
-    ): Observable<Picture>
+    ): Observable<Image>
 
     @GET("tv/{id}")
     fun fetchShow(

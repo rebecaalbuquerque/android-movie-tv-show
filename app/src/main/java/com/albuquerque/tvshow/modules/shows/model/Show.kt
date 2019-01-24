@@ -40,7 +40,7 @@ open class Show: RealmObject() {
     @SerializedName("created_by")
     var directors: RealmList<Director> = RealmList()
 
-    var networks: RealmList<Channel> = RealmList()
+    var networks: RealmList<Image> = RealmList()
 
     @SerializedName("number_of_seasons")
     var seasons: Int = 0

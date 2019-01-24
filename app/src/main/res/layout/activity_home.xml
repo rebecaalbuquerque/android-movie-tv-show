@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/homeLayout"
     android:background="@color/colorBackground"
-    tools:context=".modules.shows.view.activity.HomeActivity">
+    tools:context=".modules.home.view.activity.HomeActivity">
 
     <FrameLayout
         android:id="@+id/container"
