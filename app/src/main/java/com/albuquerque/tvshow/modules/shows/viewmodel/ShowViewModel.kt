@@ -16,7 +16,6 @@ class ShowViewModel(var id: Int): ViewModel() {
     var onFavorite = SingleLiveEvent<Show>()
 
     lateinit var show: MutableLiveData<Show>
-    lateinit var pictures: MutableLiveData<List<Image>>
 
     fun getShow(): LiveData<Show> {
 
@@ -29,31 +28,13 @@ class ShowViewModel(var id: Int): ViewModel() {
                         show.value = it
                     },
                     {
-                        onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro!!"
+                        onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro getShow!!"
                     }
             )
 
         }
 
         return show
-    }
-
-    fun getShowPictures(): MutableLiveData<List<Image>>{
-        if(!::pictures.isInitialized){
-            pictures = MutableLiveData()
-
-            ShowsBusiness.getPictures(id,
-                    {
-                        pictures.value = it
-                    },
-                    {
-                        onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro!!"
-                    }
-            )
-
-        }
-
-        return pictures
     }
 
     fun handleFavoriteClick(){

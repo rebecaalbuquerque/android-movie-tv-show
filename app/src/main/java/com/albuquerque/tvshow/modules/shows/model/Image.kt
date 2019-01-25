@@ -21,7 +21,7 @@ open class Image: RealmObject(){
      * Logo do canal de exibição da série
      * */
     @SerializedName("logo_path")
-    var logo: String = ""
+    var logoChannel: String = ""
         get() {
             return if (field.isNotBlank())
                 BaseNetwork.BASE_IMAGE_URL + field

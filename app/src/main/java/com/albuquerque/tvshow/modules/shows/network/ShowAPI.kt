@@ -19,17 +19,11 @@ interface ShowAPI {
             @Query("language") language: String? = null
     ): Observable<AuthResponse>
 
-    @GET("tv/{id}/images")
-    fun fetchPictures(
-            @Path("id") id: Int,
-            @Query("api_key") apiKey: String,
-            @Query("language") language: String? = null
-    ): Observable<Image>
-
     @GET("tv/{id}")
     fun fetchShow(
             @Path("id") id: Int,
             @Query("api_key") apiKey: String,
+            @Query("append_to_response") append: String,
             @Query("language") language: String? = null
     ): Observable<Show>
 

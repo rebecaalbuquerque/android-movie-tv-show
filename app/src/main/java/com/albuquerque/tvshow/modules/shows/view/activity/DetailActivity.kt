@@ -12,6 +12,7 @@ import com.albuquerque.tvshow.core.extensions.showError
 import com.albuquerque.tvshow.core.utils.GlideApp
 import com.albuquerque.tvshow.core.view.activity.BaseActivity
 import com.albuquerque.tvshow.modules.shows.adapter.ImageAdapter
+import com.albuquerque.tvshow.modules.shows.business.ShowsBusiness
 import com.albuquerque.tvshow.modules.shows.enum.TypeImage.CHANNEL
 import com.albuquerque.tvshow.modules.shows.enum.TypeImage.MEDIA_IMAGE
 import com.albuquerque.tvshow.modules.shows.model.Director
@@ -111,9 +112,10 @@ class DetailActivity : BaseActivity() {
                     toolbar_layout.title = show.name
 
                     channelsAdapter.refresh(show.networks)
+                    picturesAdapter.refresh(show.images?.backdrops ?: listOf())
 
                     overview.text       = show.overview
-                    createdBy.text      = getDirectorsName(show.directors)
+                    createdBy.text      = ShowsBusiness.getDirectorsNameFormatted(show.directors)
                     firstAirDate.text   = show.firstAirDate
                     nextAirDate.text    = show.nextEpisode?.airDate ?: "N/I"
                     seasons.text        = show.seasons.toString()
@@ -123,12 +125,6 @@ class DetailActivity : BaseActivity() {
                     } else {
                         fab.setImageResource(R.drawable.ic_empty_star)
                     }
-                }
-            })
-
-            getShowPictures().observe(this@DetailActivity, Observer { pictures ->
-                pictures?.let {
-                    picturesAdapter.refresh(it)
                 }
             })
 
@@ -151,30 +147,5 @@ class DetailActivity : BaseActivity() {
 
         channelsAdapter = ImageAdapter(CHANNEL)
         rvChannels.adapter = channelsAdapter
-    }
-
-    //TODO: colocar no business
-    private fun getDirectorsName(directors: List<Director>): String {
-
-        var result = ""
-
-        when(directors.size){
-            0 -> result = "N/I"
-
-            1 -> result = directors[0].name
-
-            else -> {
-
-                for(i in 0 until directors.size - 2){
-                    result += directors[i].name + ", "
-                }
-
-                result += directors[directors.size-1].name
-
-            }
-        }
-
-        return result
-
     }
 }

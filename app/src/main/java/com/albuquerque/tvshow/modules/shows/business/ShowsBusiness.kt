@@ -4,13 +4,35 @@ import com.albuquerque.tvshow.core.business.BaseBusiness
 import com.albuquerque.tvshow.modules.auth.business.AuthBusiness
 import com.albuquerque.tvshow.modules.auth.model.AuthResponse
 import com.albuquerque.tvshow.modules.shows.database.ShowDatabase
-import com.albuquerque.tvshow.modules.shows.model.Category
-import com.albuquerque.tvshow.modules.shows.model.Favorite
-import com.albuquerque.tvshow.modules.shows.model.Image
-import com.albuquerque.tvshow.modules.shows.model.Show
+import com.albuquerque.tvshow.modules.shows.model.*
 import com.albuquerque.tvshow.modules.shows.network.ShowNetwork
 
 object ShowsBusiness : BaseBusiness() {
+
+    fun getDirectorsNameFormatted(directors: List<Director>): String {
+
+        return when(directors.size){
+            0 -> "N/I"
+
+            1 -> directors[0].name
+
+            else -> {
+
+                var names = ""
+
+                for(i in 0 until directors.size - 2)
+                    names += directors[i].name + ", "
+
+
+                names += directors[directors.size-1].name
+
+                names
+
+            }
+
+        }
+
+    }
 
     fun isShowFavorite(showId: Int): Boolean{
         return ShowDatabase.getShowFromDB(showId) != null
@@ -22,17 +44,6 @@ object ShowsBusiness : BaseBusiness() {
         ShowNetwork.postAsFavorite(user.id, Favorite("tv", show.id, show.isFavorite), user.sessionId,
                 {
                     onSuccess(it)
-                },
-                {
-                    onError(it)
-                }
-        )
-    }
-
-    fun getPictures(id: Int, onSuccess: (images: List<Image>) -> Unit, onError: (error: Throwable) -> Unit){
-        ShowNetwork.requestPictures(id,
-                {
-                    onSuccess(it.backdrops)
                 },
                 {
                     onError(it)

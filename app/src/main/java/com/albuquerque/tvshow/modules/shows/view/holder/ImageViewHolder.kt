@@ -12,23 +12,19 @@ import kotlinx.android.synthetic.main.item_picture.view.*
 
 class ImageViewHolder(view: View): BaseViewHolder<Image>(view){
 
-    private var imageWidth = 0
-    private var imageHeigth = 0
-    private var type = CHANNEL
+    private var typeImage = CHANNEL
 
     override fun bind(item: Image) {
 
-        when(type){
-            CHANNEL     -> setupImage(item.logo)
+        when(typeImage){
+            CHANNEL     -> setupImage(item.logoChannel)
             MEDIA_IMAGE -> setupImage(item.url)
         }
 
     }
 
-    fun bind(item: Image, type: TypeImage, width: Int, height: Int){
-        this.type = type
-        imageHeigth = height
-        imageWidth = width
+    fun bind(item: Image, type: TypeImage){
+        typeImage = type
         bind(item)
     }
 
@@ -39,7 +35,7 @@ class ImageViewHolder(view: View): BaseViewHolder<Image>(view){
                     .with(context)
                     .load(url)
                     .placeholder(R.drawable.placeholder_image)
-                    .override(imageWidth.toDp(), imageHeigth.toDp())
+                    .override(typeImage.dimension.first.toDp(), typeImage.dimension.second.toDp())
                     .into(picture)
 
         }

@@ -17,15 +17,9 @@ object ShowNetwork: BaseNetwork() {
         }
     }
 
-    fun requestPictures(id: Int, onSuccess: (picture: Image) -> Unit, onError: (error: Throwable) -> Unit){
-        doRequest(api, onSuccess, onError){
-            fetchPictures(id, API_KEY)
-        }
-    }
-
     fun requestShow(id: Int, onSuccess: (show: Show) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
-            fetchShow(id, API_KEY)
+            fetchShow(id, API_KEY, "images")
         }
     }
 
