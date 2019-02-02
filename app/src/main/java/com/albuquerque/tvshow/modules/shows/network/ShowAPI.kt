@@ -30,18 +30,21 @@ interface ShowAPI {
     @GET("tv/airing_today")
     fun fetchAiringToday(
         @Query("api_key") apiKey: String,
+        @Query("page") page: Int,
         @Query("language") language: String? = null
     ): Observable<Category>
 
     @GET("tv/popular")
     fun fetchPopular(
             @Query("api_key") apiKey: String,
+            @Query("page") page: Int,
             @Query("language") language: String? = null
     ): Observable<Category>
 
     @GET("tv/top_rated")
     fun fetchTopRated(
             @Query("api_key") apiKey: String,
+            @Query("page") page: Int,
             @Query("language") language: String? = null
     ): Observable<Category>
 
