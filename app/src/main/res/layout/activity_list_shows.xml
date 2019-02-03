@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.shows.view.activity.ListShowsActivity">
+    tools:context=".modules.shows.view.activity.ListShowsActivity"
+    android:id="@+id/layoutPagedListShow">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvShows"
