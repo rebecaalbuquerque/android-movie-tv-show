@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.albuquerque.tvshow">
+    package="com.albuquerque.movietvshow">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".core.application.TvShowApplication"
+        android:name="com.albuquerque.movietvshow.core.application.MovieTvShowApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity
-            android:name=".modules.auth.view.activity.AuthActivity"
+            android:name="com.albuquerque.movietvshow.modules.auth.view.activity.AuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AuthActivityTheme">
             <intent-filter>
@@ -24,23 +25,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".modules.home.view.activity.HomeActivity"
+            android:name="com.albuquerque.movietvshow.modules.home.view.activity.HomeActivity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".modules.auth.view.activity.SettingsActivity"
+            android:name="com.albuquerque.movietvshow.modules.auth.view.activity.SettingsActivity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".modules.shows.view.activity.DetailActivity"
+            android:name="com.albuquerque.movietvshow.modules.shows.view.activity.DetailActivity"
             android:label=""
-            android:parentActivityName=".modules.home.view.activity.HomeActivity"
+            android:parentActivityName="com.albuquerque.movietvshow.modules.home.view.activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.albuquerque.tvshow.modules.home.view.activity.HomeActivity" />
+                android:value="com.albuquerque.movietvshow.modules.home.view.activity.HomeActivity" />
         </activity>
-        <activity android:name=".modules.shows.view.activity.ListShowsActivity"></activity>
+
+        <activity android:name="com.albuquerque.movietvshow.modules.shows.view.activity.ListShowsActivity"/>
+
     </application>
 
 </manifest>

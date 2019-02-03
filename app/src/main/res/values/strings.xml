@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TMDb TV Shows</string>
+    <string name="app_name">Movies &amp; TV Shows</string>
 
     <string name="settings_header_name">Nome</string>
     <string name="settings_header_username">Username</string>
