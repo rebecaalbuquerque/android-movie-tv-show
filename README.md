@@ -1,6 +1,7 @@
 # Movies & TV Shows
 
 A simple android app that use the TMDb API for display movies and tv shows
+> App still in development
 
 ## 3rd Party Libraries
 * [Anko](https://github.com/Kotlin/anko)
