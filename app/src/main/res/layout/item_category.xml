@@ -22,6 +22,18 @@
         android:textStyle="bold"
         tools:text="Populares" />
 
+    <TextView
+        android:id="@+id/seeMore"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/see_more"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/rvCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/titleCategory" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvCategory"
         android:layout_width="match_parent"

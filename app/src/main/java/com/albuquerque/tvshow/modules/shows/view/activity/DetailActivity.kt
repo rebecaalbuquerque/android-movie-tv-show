@@ -15,7 +15,6 @@ import com.albuquerque.tvshow.modules.shows.adapter.ImageAdapter
 import com.albuquerque.tvshow.modules.shows.business.ShowsBusiness
 import com.albuquerque.tvshow.modules.shows.enum.TypeImage.CHANNEL
 import com.albuquerque.tvshow.modules.shows.enum.TypeImage.MEDIA_IMAGE
-import com.albuquerque.tvshow.modules.shows.model.Director
 import com.albuquerque.tvshow.modules.shows.viewmodel.ShowViewModel
 import com.albuquerque.tvshow.modules.shows.viewmodel.ShowViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail.*

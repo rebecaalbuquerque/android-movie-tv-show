@@ -1,10 +1,11 @@
 package com.albuquerque.tvshow.modules.shows.model
 
+import com.albuquerque.tvshow.modules.shows.enum.TypeCategory
 import com.google.gson.annotations.SerializedName
 
 class Category() {
 
-    var name: String = ""
+    lateinit var type: TypeCategory
 
     var page: Int = 0
 
@@ -17,8 +18,8 @@ class Category() {
     @SerializedName("results")
     var shows: List<Show> = listOf()
 
-    constructor(name: String, shows: List<Show>): this(){
-        this.name = name
+    constructor(category: TypeCategory, shows: List<Show>): this(){
+        this.type = category
         this.shows = shows
     }
 

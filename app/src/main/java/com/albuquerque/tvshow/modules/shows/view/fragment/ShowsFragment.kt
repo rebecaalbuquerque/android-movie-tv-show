@@ -14,12 +14,16 @@ import com.albuquerque.tvshow.R
 import com.albuquerque.tvshow.core.extensions.showError
 import com.albuquerque.tvshow.core.view.fragment.BaseFragment
 import com.albuquerque.tvshow.modules.shows.adapter.CategoryAdapter
+import com.albuquerque.tvshow.modules.shows.event.OnCategorySeeMore
 import com.albuquerque.tvshow.modules.shows.event.OnShowClicked
 import com.albuquerque.tvshow.modules.shows.view.activity.DetailActivity
 import com.albuquerque.tvshow.modules.shows.view.activity.DetailActivity.Companion.SHOW_ID
+import com.albuquerque.tvshow.modules.shows.view.activity.ListShowsActivity
+import com.albuquerque.tvshow.modules.shows.view.activity.ListShowsActivity.Companion.CATEGORY
 import com.albuquerque.tvshow.modules.shows.viewmodel.ListCategoriesViewModel
 import kotlinx.android.synthetic.main.fragment_shows.*
 import org.greenrobot.eventbus.Subscribe
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 
 class ShowsFragment : BaseFragment() {
@@ -87,6 +91,11 @@ class ShowsFragment : BaseFragment() {
     @Subscribe
     fun onEvent(event: OnShowClicked) {
         startActivityForResult<DetailActivity>(111, SHOW_ID to event.show.id)
+    }
+
+    @Subscribe
+    fun onEvent(event: OnCategorySeeMore) {
+        startActivity<ListShowsActivity>(CATEGORY to event.category.value)
     }
 
 }

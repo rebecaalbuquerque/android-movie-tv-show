@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -29,12 +29,15 @@
 
     <ImageView
         android:id="@+id/posterShow"
-        android:layout_width="125dp"
-        android:layout_height="188dp"
-        android:layout_marginEnd="8dp"
-        android:src="@color/colorPrimary"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="125:188"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
@@ -42,13 +45,16 @@
         android:id="@+id/titleShow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/posterShow"
-        app:layout_constraintStart_toStartOf="@+id/posterShow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/posterShow"
-        tools:text="Lorem ipsum dolor sit amet" />
+        tools:text="Titulo série" />
 
 </android.support.constraint.ConstraintLayout>

@@ -23,21 +23,21 @@ object ShowNetwork: BaseNetwork() {
         }
     }
 
-    fun requestAiringToday(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
+    fun requestAiringToday(page:Int, onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
-            fetchAiringToday(API_KEY)
+            fetchAiringToday(API_KEY, page)
         }
     }
 
-    fun requestPopular(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
+    fun requestPopular(page:Int, onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
-            fetchPopular(API_KEY)
+            fetchPopular(API_KEY, page)
         }
     }
 
-    fun requestTopRated(onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
+    fun requestTopRated(page:Int, onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
-            fetchTopRated(API_KEY)
+            fetchTopRated(API_KEY, page)
         }
     }
 
