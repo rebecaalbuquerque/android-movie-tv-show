@@ -34,7 +34,6 @@ class ImageViewHolder(view: View): BaseViewHolder<Image>(view){
             GlideApp
                     .with(context)
                     .load(url)
-                    .placeholder(R.drawable.placeholder_image)
                     .override(typeImage.dimension.first.toDp(), typeImage.dimension.second.toDp())
                     .into(picture)
 

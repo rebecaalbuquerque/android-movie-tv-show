@@ -29,13 +29,13 @@ object ShowNetwork: BaseNetwork() {
         }
     }
 
-    fun requestPopular(page:Int = 1, onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
+    fun requestPopular(page:Int, onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
             fetchPopular(API_KEY, page)
         }
     }
 
-    fun requestTopRated(page:Int = 1, onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
+    fun requestTopRated(page:Int, onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
         doRequest(api, onSuccess, onError){
             fetchTopRated(API_KEY, page)
         }

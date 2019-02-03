@@ -27,7 +27,11 @@ class PagedShowsAdapter: PagedListAdapter<Show, MediaViewHolder>(DIFF_CALLBACK) 
     }
 
     override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
-        holder.bind(getItem(position)!!)
+        holder.bind(getItem(position)!!, true)
+    }
+
+    fun getShow(position: Int): Show{
+        return getItem(position)!!
     }
 
 }

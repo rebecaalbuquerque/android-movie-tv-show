@@ -111,7 +111,7 @@ object ShowsBusiness : BaseBusiness() {
 
     fun getPopularFromAPI(page: Int = 1, onSuccess: (shows: List<Show>) -> Unit, onError: (error: Throwable) -> Unit) {
 
-        ShowNetwork.requestPopular(
+        ShowNetwork.requestPopular(page,
                 onSuccess = {
                     onSuccess(it.shows)
                 },
@@ -125,7 +125,7 @@ object ShowsBusiness : BaseBusiness() {
 
     fun getTopRatedFromAPI(page: Int = 1, onSuccess: (shows: List<Show>) -> Unit, onError: (error: Throwable) -> Unit) {
 
-        ShowNetwork.requestTopRated(
+        ShowNetwork.requestTopRated(page,
                 onSuccess = {
                     onSuccess(it.shows)
                 },

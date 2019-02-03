@@ -11,6 +11,8 @@ import org.greenrobot.eventbus.EventBus
 
 class MediaViewHolder(view: View): BaseViewHolder<Show>(view){
 
+    private var isGrid = false
+
     override fun bind(item: Show) {
         with(itemView){
             titleShow.text = item.name
@@ -23,10 +25,17 @@ class MediaViewHolder(view: View): BaseViewHolder<Show>(view){
 
             average.text = item.average.toString()
 
-            posterShow.setOnClickListener {
-                EventBus.getDefault().post(OnShowClicked(item))
+            if(!isGrid){
+                posterShow.setOnClickListener {
+                    EventBus.getDefault().post(OnShowClicked(item))
+                }
             }
 
         }
+    }
+
+    fun bind(item: Show, isGrid: Boolean){
+        this.isGrid = isGrid
+        bind(item)
     }
 }
