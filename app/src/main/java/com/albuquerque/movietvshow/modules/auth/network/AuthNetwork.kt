@@ -9,12 +9,6 @@ object AuthNetwork: BaseNetwork() {
 
     private val api by lazy { getRetrofitBuilder().build().create(AuthAPI::class.java) }
 
-    fun requestUserFavorites(accountId: Int, sessionId: String, onSuccess: (favorites: Favorites) -> Unit, onError: (error: Throwable) -> Unit ){
-        doRequest(api, onSuccess, onError){
-            fetchUserFavoritesShows(accountId, API_KEY, sessionId)
-        }
-    }
-
     // Login
     fun requestToken(onSuccess: (response: AuthResponse) -> Unit, onError: (error: Throwable) -> Unit ){
 

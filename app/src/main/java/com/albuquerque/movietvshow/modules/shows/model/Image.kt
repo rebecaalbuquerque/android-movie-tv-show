@@ -9,9 +9,9 @@ open class Image: RealmObject(){
 
     @Ignore
     @SerializedName("file_path")
-    var url: String = ""
+    var url: String? = ""
         get() {
-            return if (field.isNotBlank())
+            return if (!field.isNullOrBlank())
                 BaseNetwork.BASE_IMAGE_URL + field
             else
                 ""
@@ -21,9 +21,9 @@ open class Image: RealmObject(){
      * Logo do canal de exibição da série
      * */
     @SerializedName("logo_path")
-    var logoChannel: String = ""
+    var logoChannel: String? = ""
         get() {
-            return if (field.isNotBlank())
+            return if (!field.isNullOrBlank())
                 BaseNetwork.BASE_IMAGE_URL + field
             else
                 ""

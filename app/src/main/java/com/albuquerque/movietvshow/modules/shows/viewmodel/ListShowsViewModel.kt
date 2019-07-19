@@ -17,9 +17,13 @@ class ListShowsViewModel(val category: TypeCategory): ViewModel() {
     private var showsPaged: LiveData<PagedList<Show>> = MutableLiveData()
     private var liveDataSource: LiveData<ShowDataSource> = MutableLiveData()
 
+    val onRequesStarted = SingleLiveEvent<Void>()
+    val onRequestStop = SingleLiveEvent<Void>()
+
     var onError = SingleLiveEvent<String>()
 
     fun getShows(): LiveData<PagedList<Show>>{
+        onRequesStarted.call()
         val showDataSourceFactory = ShowDataSourceFactory(category)
 
         liveDataSource = showDataSourceFactory.showLiveDataSource

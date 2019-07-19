@@ -12,7 +12,8 @@ import com.albuquerque.movietvshow.modules.shows.model.Show
 class ShowViewModel(var id: Int): ViewModel() {
 
     var onError = SingleLiveEvent<String>()
-    var onFavorite = SingleLiveEvent<Show>()
+    var onSelectedFavorite = SingleLiveEvent<Void>()
+    var onUnselectedFavorite = SingleLiveEvent<Void>()
 
     lateinit var show: MutableLiveData<Show>
 
@@ -38,20 +39,19 @@ class ShowViewModel(var id: Int): ViewModel() {
 
     fun handleFavoriteClick(){
 
-        show.value?.let { s ->
+        show.value?.let { currentShow ->
 
-            s.isFavorite = !s.isFavorite
+            currentShow.isFavorite = !currentShow.isFavorite
 
-            ShowsBusiness.markAsFavorite(s,
+            ShowsBusiness.markAsFavorite(currentShow,
                     {
-                        if(s.isFavorite) {
-                            ShowDatabase.salveOrUpdateAsync(s, onNext = {
-                                onFavorite.value = s
+                        if(currentShow.isFavorite) {
+                            ShowDatabase.salveOrUpdateAsync(currentShow, onNext = {
+                                onSelectedFavorite.call()
                             })
                         } else {
-                            ShowDatabase.removeFavorite(s.id)
-
-                            onFavorite.value = s
+                            ShowDatabase.removeFavorite(currentShow.id)
+                            onUnselectedFavorite.call()
                         }
 
                     },

@@ -17,7 +17,13 @@ class ShowDataSource(private val categoria: TypeCategory): PageKeyedDataSource<I
 
         when(categoria){
             FAVORITAS -> {
+                ShowsBusiness.getFavoritesFromAPI(page,
+                        {
+                            callback.onResult(it, null, page + 1)
 
+                        },
+                        { EventBus.getDefault().post(OnErrorPagedList(it)) }
+                )
             }
 
             EM_EXIBICAO -> {
@@ -49,7 +55,10 @@ class ShowDataSource(private val categoria: TypeCategory): PageKeyedDataSource<I
 
         when(categoria){
             FAVORITAS -> {
-
+                ShowsBusiness.getFavoritesFromAPI(params.key,
+                        { callback.onResult(it,  params.key + 1) },
+                        { EventBus.getDefault().post(OnErrorPagedList(it)) }
+                )
             }
 
             EM_EXIBICAO -> {

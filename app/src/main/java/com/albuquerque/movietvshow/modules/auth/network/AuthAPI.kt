@@ -8,13 +8,6 @@ import retrofit2.http.*
 
 interface AuthAPI {
 
-    @GET("account/{account_id}/favorite/tv")
-    fun fetchUserFavoritesShows(
-            @Path("account_id") accountId: Int,
-            @Query("api_key") apiKey: String,
-            @Query("session_id") sessionId: String
-    ): Observable<Favorites>
-
     @GET("authentication/token/new")
     fun fetchRequestToken(
             @Query("api_key") apiKey: String

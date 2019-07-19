@@ -1,6 +1,7 @@
 package com.albuquerque.movietvshow.modules.shows.view.holder
 
 import android.view.View
+import com.albuquerque.movietvshow.R
 import com.albuquerque.movietvshow.core.extensions.toDp
 import com.albuquerque.movietvshow.core.utils.GlideApp
 import com.albuquerque.movietvshow.core.view.holder.BaseViewHolder
@@ -27,12 +28,12 @@ class ImageViewHolder(view: View): BaseViewHolder<Image>(view){
         bind(item)
     }
 
-    private fun setupImage(url: String){
+    private fun setupImage(url: String?){
         with(itemView){
-
             GlideApp
                     .with(context)
                     .load(url)
+                    .placeholder(R.drawable.placeholder_image)
                     .override(typeImage.dimension.first.toDp(), typeImage.dimension.second.toDp())
                     .into(picture)
 

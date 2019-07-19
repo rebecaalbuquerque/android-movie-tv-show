@@ -41,7 +41,7 @@ class ShowsFragment : BaseFragment() {
         progressShows.visibility = VISIBLE
         categoryViewModel = ViewModelProviders.of(this).get(ListCategoriesViewModel::class.java)
 
-        setupAdapter()
+        setupView()
         subscribeUI()
 
     }
@@ -55,7 +55,7 @@ class ShowsFragment : BaseFragment() {
 
     }
 
-    private fun setupAdapter(){
+    private fun setupView(){
         categoryAdapter = CategoryAdapter()
         rvCategories.adapter = categoryAdapter
     }
@@ -73,19 +73,15 @@ class ShowsFragment : BaseFragment() {
 
             onError.observe(this@ShowsFragment, Observer { error ->
                 error?.let {
-                    setupError()
+                    progressShows.visibility = GONE
+                    rvCategories.visibility = GONE
+                    errorIcon.visibility = VISIBLE
                     Snackbar.make(layoutShows, error, Snackbar.LENGTH_LONG).showError()
                 }
             })
 
         }
 
-    }
-
-    private fun setupError(){
-        progressShows.visibility = GONE
-        rvCategories.visibility = GONE
-        errorIcon.visibility = VISIBLE
     }
 
     @Subscribe

@@ -48,7 +48,6 @@ abstract class BaseNetwork {
                             onSucess(response)
                         },
                         {
-                            //onError(NetworkError((error)))
                             onError?.invoke(it)
                         }
                 )

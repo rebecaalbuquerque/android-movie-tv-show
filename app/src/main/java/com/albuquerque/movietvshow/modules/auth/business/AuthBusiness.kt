@@ -5,18 +5,19 @@ import com.albuquerque.movietvshow.modules.auth.database.AuthDatabase
 import com.albuquerque.movietvshow.modules.auth.model.User
 import com.albuquerque.movietvshow.modules.auth.network.AuthNetwork
 import com.albuquerque.movietvshow.modules.shows.database.ShowDatabase
+import com.albuquerque.movietvshow.modules.shows.network.ShowNetwork
 
 object AuthBusiness {
 
     fun getFavoritesFromAPI(onSuccess: () -> Unit, onError: (msg: Throwable) -> Unit){
         val user = getUser()!!
 
-        AuthNetwork.requestUserFavorites(user.id, user.sessionId,
+        ShowNetwork.requestFavorites(user.id, user.sessionId, 1,
                 { favorites ->
 
-                    favorites.list.forEach { it.isFavorite = true }
+                    favorites.shows.forEach { it.isFavorite = true }
 
-                    ShowDatabase.salveOrUpdateAll(favorites.list.toMutableList(), onNext = {
+                    ShowDatabase.salveOrUpdateAll(favorites.shows.toMutableList(), onNext = {
                         onSuccess()
                     })
                 },

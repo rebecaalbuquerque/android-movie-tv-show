@@ -137,4 +137,19 @@ object ShowsBusiness : BaseBusiness() {
 
     }
 
+    fun getFavoritesFromAPI(page: Int = 1, onSuccess: (shows: List<Show>) -> Unit, onError: (error: Throwable) -> Unit) {
+        val user = AuthBusiness.getUser()!!
+
+        ShowNetwork.requestFavorites(user.id, user.sessionId, page,
+                onSuccess = {
+                    onSuccess(it.shows)
+                },
+
+                onError = {
+                    onError(it)
+                }
+        )
+
+    }
+
 }

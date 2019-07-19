@@ -15,6 +15,7 @@ import com.albuquerque.movietvshow.modules.shows.adapter.ImageAdapter
 import com.albuquerque.movietvshow.modules.shows.business.ShowsBusiness
 import com.albuquerque.movietvshow.modules.shows.enum.TypeImage.CHANNEL
 import com.albuquerque.movietvshow.modules.shows.enum.TypeImage.MEDIA_IMAGE
+import com.albuquerque.movietvshow.modules.shows.model.Show
 import com.albuquerque.movietvshow.modules.shows.viewmodel.ShowViewModel
 import com.albuquerque.movietvshow.modules.shows.viewmodel.ShowViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -49,8 +50,6 @@ class DetailActivity : BaseActivity() {
 
         subscribeUI()
         setupToolbar()
-        setupFab()
-        setupRecyclerView()
 
     }
 
@@ -68,27 +67,59 @@ class DetailActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun setupFab(){
+    private fun setupView(show: Show){
+
         fab.setOnClickListener {
             showViewModel.handleFavoriteClick()
         }
+
+        picturesAdapter = ImageAdapter(MEDIA_IMAGE)
+        rvPictures.adapter = picturesAdapter
+
+        channelsAdapter = ImageAdapter(CHANNEL)
+        rvChannels.adapter = channelsAdapter
+
+        oldFavoriteValue = show.isFavorite
+        newFavoriteValue = show.isFavorite
+        hideProgressBar()
+
+        GlideApp
+                .with(this@DetailActivity)
+                .load(show.backdropPath)
+                .into(expandedImage)
+
+        toolbar_layout.title = show.name
+
+        channelsAdapter.refresh(show.networks)
+        picturesAdapter.refresh(show.images?.backdrops ?: listOf())
+
+        overview.text       = show.overview
+        createdBy.text      = ShowsBusiness.getDirectorsNameFormatted(show.directors)
+        firstAirDate.text   = show.firstAirDate
+        nextAirDate.text    = show.nextEpisode?.airDate ?: "N/I"
+        seasons.text        = show.seasons.toString()
+
+        if(show.isFavorite) {
+            fab.setImageResource(R.drawable.ic_full_star)
+        } else {
+            fab.setImageResource(R.drawable.ic_empty_star)
+        }
+
     }
 
     private fun subscribeUI() {
         with(showViewModel){
 
-            onFavorite.observe(this@DetailActivity, Observer { show ->
-                show?.let {
-                    if(show.isFavorite) {
-                        newFavoriteValue = true
-                        fab.setImageResource(R.drawable.ic_full_star)
-                        Toast.makeText(this@DetailActivity, "Adicionado aos favoritos", Toast.LENGTH_LONG).show()
-                    } else {
-                        newFavoriteValue = false
-                        fab.setImageResource(R.drawable.ic_empty_star)
-                        Toast.makeText(this@DetailActivity, "Removido dos favoritos", Toast.LENGTH_LONG).show()
-                    }
-                }
+            onSelectedFavorite.observe(this@DetailActivity, Observer {
+                newFavoriteValue = true
+                fab.setImageResource(R.drawable.ic_full_star)
+                Toast.makeText(this@DetailActivity, "Adicionado aos favoritos", Toast.LENGTH_LONG).show()
+            })
+
+            onUnselectedFavorite.observe(this@DetailActivity, Observer {
+                newFavoriteValue = false
+                fab.setImageResource(R.drawable.ic_empty_star)
+                Toast.makeText(this@DetailActivity, "Removido dos favoritos", Toast.LENGTH_LONG).show()
             })
 
             onError.observe(this@DetailActivity, Observer { error ->
@@ -98,33 +129,7 @@ class DetailActivity : BaseActivity() {
             })
 
             getShow().observe(this@DetailActivity, Observer {  show ->
-                show?.let {
-                    oldFavoriteValue = show.isFavorite
-                    newFavoriteValue = show.isFavorite
-                    hideProgressBar()
-
-                    GlideApp
-                            .with(this@DetailActivity)
-                            .load(show.backdropPath)
-                            .into(expandedImage)
-
-                    toolbar_layout.title = show.name
-
-                    channelsAdapter.refresh(show.networks)
-                    picturesAdapter.refresh(show.images?.backdrops ?: listOf())
-
-                    overview.text       = show.overview
-                    createdBy.text      = ShowsBusiness.getDirectorsNameFormatted(show.directors)
-                    firstAirDate.text   = show.firstAirDate
-                    nextAirDate.text    = show.nextEpisode?.airDate ?: "N/I"
-                    seasons.text        = show.seasons.toString()
-
-                    if(show.isFavorite) {
-                        fab.setImageResource(R.drawable.ic_full_star)
-                    } else {
-                        fab.setImageResource(R.drawable.ic_empty_star)
-                    }
-                }
+                show?.let { setupView(it) }
             })
 
         }
@@ -140,11 +145,4 @@ class DetailActivity : BaseActivity() {
         contentInformations.visibility = VISIBLE
     }
 
-    private fun setupRecyclerView() {
-        picturesAdapter = ImageAdapter(MEDIA_IMAGE)
-        rvPictures.adapter = picturesAdapter
-
-        channelsAdapter = ImageAdapter(CHANNEL)
-        rvChannels.adapter = channelsAdapter
-    }
 }

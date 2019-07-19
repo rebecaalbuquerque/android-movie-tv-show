@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.view.View
 import com.albuquerque.movietvshow.R
 import com.albuquerque.movietvshow.core.extensions.setOnItemClickListener
 import com.albuquerque.movietvshow.core.extensions.showError
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_list_shows.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 class ListShowsActivity : BaseActivity() {
 
@@ -47,8 +49,7 @@ class ListShowsActivity : BaseActivity() {
         )
 
         setupToolbar(category.value)
-
-        setupRecyclerView()
+        setupView()
         subscribeUI()
 
     }
@@ -80,7 +81,7 @@ class ListShowsActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun setupRecyclerView(){
+    private fun setupView(){
         pagedAdapter = PagedShowsAdapter()
         rvShows.adapter = pagedAdapter
 
@@ -96,13 +97,27 @@ class ListShowsActivity : BaseActivity() {
         with(listShowsViewModel){
 
             getShows().observe(this@ListShowsActivity, Observer { pagedList ->
-                pagedList?.let { pagedAdapter.submitList(it) }
+                pagedList?.let {
+                    pagedAdapter.submitList(it)
+                    onRequestStop.call()
+                }
             })
 
             onError.observe(this@ListShowsActivity, Observer {  error ->
                 error?.let {
+                    onRequestStop.call()
                     Snackbar.make(layoutPagedListShow, it, Snackbar.LENGTH_LONG).showError()
                 }
+            })
+
+            onRequesStarted.observe(this@ListShowsActivity, Observer {
+                progressListShows.visibility = View.VISIBLE
+                rvShows.visibility = View.GONE
+            })
+
+            onRequestStop.observe(this@ListShowsActivity, Observer {
+                progressListShows.visibility = View.GONE
+                rvShows.visibility = View.VISIBLE
             })
         }
     }

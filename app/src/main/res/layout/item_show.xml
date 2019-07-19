@@ -31,10 +31,12 @@
         android:id="@+id/posterShow"
         android:layout_width="125dp"
         android:layout_height="188dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:src="@color/colorPrimary"
         android:scaleType="centerCrop"
+        android:src="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 

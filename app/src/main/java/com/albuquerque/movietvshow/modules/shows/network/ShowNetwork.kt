@@ -40,4 +40,10 @@ object ShowNetwork: BaseNetwork() {
         }
     }
 
+    fun requestFavorites(id:Int, sessionId: String, page:Int, onSuccess: (shows: Category) -> Unit, onError: (error: Throwable) -> Unit){
+        doRequest(api, onSuccess, onError){
+            fetchFavorites(id, sessionId, API_KEY, page)
+        }
+    }
+
 }

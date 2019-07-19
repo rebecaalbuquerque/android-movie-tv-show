@@ -20,7 +20,9 @@ object ShowDatabase : BaseDatabase() {
         return Realm.getDefaultInstance().use { realm ->
             realm.where(Show::class.java)
                     .equalTo(Show::isFavorite.name, true)
+                    .limit(20)
                     .findAll()
+
         }
     }
 

@@ -47,4 +47,13 @@ interface ShowAPI {
             @Query("language") language: String? = null
     ): Observable<Category>
 
+    @GET("account/{account_id}/favorite/tv")
+    fun fetchFavorites(
+            @Path("account_id") accountId: Int,
+            @Query("session_id") sessionId: String,
+            @Query("api_key") apiKey: String,
+            @Query("page") page: Int,
+            @Query("language") language: String? = null
+    ): Observable<Category>
+
 }
