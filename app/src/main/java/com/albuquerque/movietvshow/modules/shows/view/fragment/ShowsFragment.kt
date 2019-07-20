@@ -11,6 +11,8 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.albuquerque.movietvshow.R
+import com.albuquerque.movietvshow.core.extensions.setGone
+import com.albuquerque.movietvshow.core.extensions.setVisible
 import com.albuquerque.movietvshow.core.extensions.showError
 import com.albuquerque.movietvshow.core.view.fragment.BaseFragment
 import com.albuquerque.movietvshow.modules.shows.adapter.CategoryAdapter
@@ -38,7 +40,6 @@ class ShowsFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        progressShows.visibility = VISIBLE
         categoryViewModel = ViewModelProviders.of(this).get(ListCategoriesViewModel::class.java)
 
         setupView()
@@ -64,20 +65,26 @@ class ShowsFragment : BaseFragment() {
 
         with(categoryViewModel){
 
-            getCategories().observe(this@ShowsFragment, Observer { categories ->
+            categories.observe(this@ShowsFragment, Observer { categories ->
                 categories?.let {
-                    progressShows.visibility = GONE
                     categoryAdapter.refresh(it)
                 }
             })
 
             onError.observe(this@ShowsFragment, Observer { error ->
                 error?.let {
-                    progressShows.visibility = GONE
-                    rvCategories.visibility = GONE
-                    errorIcon.visibility = VISIBLE
+                    rvCategories.setGone()
+                    errorIcon.setVisible()
                     Snackbar.make(layoutShows, error, Snackbar.LENGTH_LONG).showError()
                 }
+            })
+
+            onRequestStarted.observe(this@ShowsFragment, Observer {
+                progressShows.setVisible()
+            })
+
+            onRequestFinished.observe(this@ShowsFragment, Observer {
+                progressShows.setGone()
             })
 
         }

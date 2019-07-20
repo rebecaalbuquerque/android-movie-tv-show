@@ -1,6 +1,5 @@
 package com.albuquerque.movietvshow.modules.shows.viewmodel
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.albuquerque.movietvshow.core.livedata.SingleLiveEvent
@@ -9,43 +8,56 @@ import com.albuquerque.movietvshow.modules.shows.business.ShowsBusiness
 import com.albuquerque.movietvshow.modules.shows.database.ShowDatabase
 import com.albuquerque.movietvshow.modules.shows.model.Show
 
-class ShowViewModel(var id: Int): ViewModel() {
+class ShowViewModel(var id: Int) : ViewModel() {
 
     var onError = SingleLiveEvent<String>()
+    var onErrorDB = SingleLiveEvent<String>()
     var onSelectedFavorite = SingleLiveEvent<Void>()
     var onUnselectedFavorite = SingleLiveEvent<Void>()
+    var onRequestStarted = SingleLiveEvent<Void>()
+    var onRequestFinished = SingleLiveEvent<Void>()
 
-    lateinit var show: MutableLiveData<Show>
+    var show: MutableLiveData<Show> = MutableLiveData()
 
-    fun getShow(): LiveData<Show> {
-
-        if(!::show.isInitialized){
-            show = MutableLiveData()
-
-            ShowsBusiness.getShow(id,
-                    {
-                        it.isFavorite = ShowsBusiness.isShowFavorite(id)
-                        show.value = it
-                    },
-                    {
-                        onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro getShow!!"
-                    }
-            )
-
-        }
-
-        return show
+    init {
+        // se ta no BD é porque é favorita
+        show.value = ShowsBusiness.getShowFromDB(id)
+        updateShow()
     }
 
-    fun handleFavoriteClick(){
+    fun updateShow() {
+        onRequestStarted.call()
+
+        ShowsBusiness.getShowFromAPI(id,
+                {
+                    onRequestFinished.call()
+                    show.value = it
+                },
+                { error ->
+                    onRequestFinished.call()
+
+                    show.value?.let {
+                        onError.value = ErrorUtils.geErrorMessage(error) ?: "Erro getShow!!"
+                    } ?: kotlin.run {
+                        onErrorDB.value = ErrorUtils.geErrorMessage(error) ?: "Erro getShow!!"
+                    }
+                }
+        )
+
+    }
+
+    fun handleFavoriteClick() {
 
         show.value?.let { currentShow ->
 
             currentShow.isFavorite = !currentShow.isFavorite
+            onRequestStarted.call()
 
             ShowsBusiness.markAsFavorite(currentShow,
                     {
-                        if(currentShow.isFavorite) {
+                        onRequestFinished.call()
+
+                        if (currentShow.isFavorite) {
                             ShowDatabase.salveOrUpdateAsync(currentShow, onNext = {
                                 onSelectedFavorite.call()
                             })
@@ -56,6 +68,7 @@ class ShowViewModel(var id: Int): ViewModel() {
 
                     },
                     {
+                        onRequestFinished.call()
                         onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro fav"
                     }
             )

@@ -10,26 +10,28 @@ import com.albuquerque.movietvshow.modules.shows.model.Category
 class ListCategoriesViewModel: ViewModel() {
 
     var onError = SingleLiveEvent<String>()
+    var onRequestStarted = SingleLiveEvent<Void>()
+    var onRequestFinished = SingleLiveEvent<Void>()
 
-    private lateinit var categories: MutableLiveData<List<Category>>
+    var categories: MutableLiveData<List<Category>> = MutableLiveData()
 
-    fun getCategories(): MutableLiveData<List<Category>> {
+    init {
+        updateCategories()
+    }
 
-        if (!::categories.isInitialized) {
-            categories = MutableLiveData()
-            ShowsBusiness.getCategories(
-                    {
-                        categories.value = it
-                    },
-                    {
-                        onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro getCategories"
-                    }
-            )
+    fun updateCategories() {
+        onRequestStarted.call()
 
-
-        }
-
-        return categories
+        ShowsBusiness.getCategories(
+                {
+                    categories.value = it
+                    onRequestFinished.call()
+                },
+                {
+                    onError.value = ErrorUtils.geErrorMessage(it) ?: "Erro getCategories"
+                    onRequestFinished.call()
+                }
+        )
     }
 
 }

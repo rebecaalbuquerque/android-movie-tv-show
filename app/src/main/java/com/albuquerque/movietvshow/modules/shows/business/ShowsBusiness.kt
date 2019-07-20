@@ -5,39 +5,12 @@ import com.albuquerque.movietvshow.modules.auth.business.AuthBusiness
 import com.albuquerque.movietvshow.modules.auth.model.AuthResponse
 import com.albuquerque.movietvshow.modules.shows.database.ShowDatabase
 import com.albuquerque.movietvshow.modules.shows.enum.TypeCategory.*
-import com.albuquerque.movietvshow.modules.shows.model.*
+import com.albuquerque.movietvshow.modules.shows.model.Category
+import com.albuquerque.movietvshow.modules.shows.model.Favorite
+import com.albuquerque.movietvshow.modules.shows.model.Show
 import com.albuquerque.movietvshow.modules.shows.network.ShowNetwork
 
 object ShowsBusiness : BaseBusiness() {
-
-    fun getDirectorsNameFormatted(directors: List<Director>): String {
-
-        return when (directors.size) {
-            0 -> "N/I"
-
-            1 -> directors[0].name
-
-            else -> {
-
-                var names = ""
-
-                for (i in 0 until directors.size - 2)
-                    names += directors[i].name + ", "
-
-
-                names += directors[directors.size - 1].name
-
-                names
-
-            }
-
-        }
-
-    }
-
-    fun isShowFavorite(showId: Int): Boolean {
-        return ShowDatabase.getShowFromDB(showId) != null
-    }
 
     fun markAsFavorite(show: Show, onSuccess: (response: AuthResponse) -> Unit, onError: (error: Throwable) -> Unit) {
         val user = AuthBusiness.getUser()!!
@@ -52,15 +25,22 @@ object ShowsBusiness : BaseBusiness() {
         )
     }
 
-    fun getShow(id: Int, onSuccess: (show: Show) -> Unit, onError: (error: Throwable) -> Unit) {
+    fun getShowFromAPI(id: Int, onSuccess: (show: Show) -> Unit, onError: (error: Throwable) -> Unit) {
         ShowNetwork.requestShow(id,
-                {
-                    onSuccess(it)
+                { show ->
+
+                    // Só atualiza quem já está no BD que no caso são apenas os shows favoritos
+                    ShowDatabase.getShowFromDB(id)?.let { ShowDatabase.saveOrUpdate(it) }
+                    onSuccess(show)
                 },
                 {
                     onError(it)
                 }
         )
+    }
+
+    fun getShowFromDB(id: Int): Show? {
+        return ShowDatabase.getShowFromDB(id)
     }
 
     fun getCategories(onSuccess: (categories: List<Category>) -> Unit, onError: (error: Throwable) -> Unit) {

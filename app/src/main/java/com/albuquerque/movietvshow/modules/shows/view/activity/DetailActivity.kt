@@ -4,18 +4,18 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.widget.Toast
 import com.albuquerque.movietvshow.R
+import com.albuquerque.movietvshow.core.extensions.setGone
+import com.albuquerque.movietvshow.core.extensions.setVisible
 import com.albuquerque.movietvshow.core.extensions.showError
 import com.albuquerque.movietvshow.core.utils.GlideApp
 import com.albuquerque.movietvshow.core.view.activity.BaseActivity
 import com.albuquerque.movietvshow.modules.shows.adapter.ImageAdapter
-import com.albuquerque.movietvshow.modules.shows.business.ShowsBusiness
 import com.albuquerque.movietvshow.modules.shows.enum.TypeImage.CHANNEL
 import com.albuquerque.movietvshow.modules.shows.enum.TypeImage.MEDIA_IMAGE
 import com.albuquerque.movietvshow.modules.shows.model.Show
+import com.albuquerque.movietvshow.modules.shows.model.getDirectorsNameFormatted
 import com.albuquerque.movietvshow.modules.shows.viewmodel.ShowViewModel
 import com.albuquerque.movietvshow.modules.shows.viewmodel.ShowViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -39,25 +39,23 @@ class DetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        showProgressBar()
-
         showID = intent.getIntExtra(SHOW_ID, -1)
 
         showViewModel = ViewModelProviders.of(
                 this,
-                ShowViewModelFactory(showID)).get(ShowViewModel::class.java
-        )
+                ShowViewModelFactory(showID)
+        ).get(ShowViewModel::class.java)
 
         subscribeUI()
         setupToolbar()
+        setupView()
 
     }
 
     override fun onBackPressed() {
 
-        if(showID != -1 && (oldFavoriteValue != newFavoriteValue)){
+        if(showID != -1 && (oldFavoriteValue != newFavoriteValue))
             setResult(111)
-        }
 
         super.onBackPressed()
     }
@@ -67,11 +65,13 @@ class DetailActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun setupView(show: Show){
+    private fun setupView() {
+        btnTentarNovamente.setOnClickListener { showViewModel.updateShow() }
+    }
 
-        fab.setOnClickListener {
-            showViewModel.handleFavoriteClick()
-        }
+    private fun setupShow(show: Show){
+
+        fab.setOnClickListener { showViewModel.handleFavoriteClick() }
 
         picturesAdapter = ImageAdapter(MEDIA_IMAGE)
         rvPictures.adapter = picturesAdapter
@@ -94,7 +94,7 @@ class DetailActivity : BaseActivity() {
         picturesAdapter.refresh(show.images?.backdrops ?: listOf())
 
         overview.text       = show.overview
-        createdBy.text      = ShowsBusiness.getDirectorsNameFormatted(show.directors)
+        createdBy.text      = show.directors.getDirectorsNameFormatted()
         firstAirDate.text   = show.firstAirDate
         nextAirDate.text    = show.nextEpisode?.airDate ?: "N/I"
         seasons.text        = show.seasons.toString()
@@ -125,24 +125,46 @@ class DetailActivity : BaseActivity() {
             onError.observe(this@DetailActivity, Observer { error ->
                 error?.let {
                     Snackbar.make(detailLayout, it, Snackbar.LENGTH_LONG).showError()
+                    containerErrorDetail.setGone()
+                    fab.setVisible()
                 }
             })
 
-            getShow().observe(this@DetailActivity, Observer {  show ->
-                show?.let { setupView(it) }
+            onErrorDB.observe(this@DetailActivity, Observer { error ->
+                error?.let {
+                    fab.setGone()
+                    containerErrorDetail.setVisible()
+                    Snackbar.make(detailLayout, it, Snackbar.LENGTH_LONG).showError()
+                }
+            })
+
+            show.observe(this@DetailActivity, Observer {  show ->
+                show?.let {
+                    fab.setVisible()
+                    containerErrorDetail.setGone()
+                    setupShow(it)
+                }
+            })
+
+            onRequestStarted.observe(this@DetailActivity, Observer {
+                showProgressBar()
+            })
+
+            onRequestFinished.observe(this@DetailActivity, Observer {
+                hideProgressBar()
             })
 
         }
     }
 
     private fun showProgressBar(){
-        progressDetail.visibility = VISIBLE
-        contentInformations.visibility = GONE
+        progressDetail.setVisible()
+        contentInformations.setGone()
     }
 
     private fun hideProgressBar(){
-        progressDetail.visibility = GONE
-        contentInformations.visibility = VISIBLE
+        progressDetail.setGone()
+        contentInformations.setVisible()
     }
 
 }

@@ -30,6 +30,12 @@ open class Show: RealmObject() {
         get() = BASE_IMAGE_URL + field
 
     var overview: String = ""
+        get() {
+            return if(field.isBlank() || field.isEmpty())
+                "Informação não fornecida."
+            else
+                field
+        }
 
     @SerializedName("vote_average")
     var average: Double = 0.0
