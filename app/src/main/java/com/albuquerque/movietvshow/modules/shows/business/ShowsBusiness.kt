@@ -30,7 +30,7 @@ object ShowsBusiness : BaseBusiness() {
                 { show ->
 
                     // Só atualiza quem já está no BD que no caso são apenas os shows favoritos
-                    ShowDatabase.getShowFromDB(id)?.let { ShowDatabase.saveOrUpdate(it) }
+                    ShowDatabase.getShowFromDB(id)?.let { ShowDatabase.saveOrUpdate(show) }
                     onSuccess(show)
                 },
                 {

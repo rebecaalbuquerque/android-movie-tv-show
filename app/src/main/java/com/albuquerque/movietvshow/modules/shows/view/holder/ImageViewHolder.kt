@@ -8,13 +8,14 @@ import com.albuquerque.movietvshow.core.view.holder.BaseViewHolder
 import com.albuquerque.movietvshow.modules.shows.enum.TypeImage
 import com.albuquerque.movietvshow.modules.shows.enum.TypeImage.*
 import com.albuquerque.movietvshow.modules.shows.model.Image
+import com.albuquerque.movietvshow.modules.shows.model.Picture
 import kotlinx.android.synthetic.main.item_picture.view.*
 
-class ImageViewHolder(view: View): BaseViewHolder<Image>(view){
+class ImageViewHolder(view: View): BaseViewHolder<Picture>(view){
 
     private var typeImage = CHANNEL
 
-    override fun bind(item: Image) {
+    override fun bind(item: Picture) {
 
         when(typeImage){
             CHANNEL     -> setupImage(item.logoChannel)
@@ -23,7 +24,7 @@ class ImageViewHolder(view: View): BaseViewHolder<Image>(view){
 
     }
 
-    fun bind(item: Image, type: TypeImage){
+    fun bind(item: Picture, type: TypeImage){
         typeImage = type
         bind(item)
     }

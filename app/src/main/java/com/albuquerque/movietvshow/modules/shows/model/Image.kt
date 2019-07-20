@@ -2,12 +2,23 @@ package com.albuquerque.movietvshow.modules.shows.model
 
 import com.albuquerque.movietvshow.core.network.BaseNetwork
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 
 open class Image: RealmObject(){
 
+    /**
+     * Imagens da série
+     * */
+    var backdrops: RealmList<Picture> = RealmList()
+
     @Ignore
+    var posters : List<Picture> = mutableListOf()
+}
+
+open class Picture: RealmObject() {
+
     @SerializedName("file_path")
     var url: String? = ""
         get() {
@@ -29,12 +40,4 @@ open class Image: RealmObject(){
                 ""
         }
 
-    /**
-     * Imagens da série
-     * */
-    @Ignore
-    var backdrops: List<Image> = mutableListOf()
-
-    @Ignore
-    var posters : List<Image> = mutableListOf()
 }

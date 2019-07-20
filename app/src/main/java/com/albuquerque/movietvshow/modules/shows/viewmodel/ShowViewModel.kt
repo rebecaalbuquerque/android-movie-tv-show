@@ -21,7 +21,7 @@ class ShowViewModel(var id: Int) : ViewModel() {
 
     init {
         // se ta no BD é porque é favorita
-        show.value = ShowsBusiness.getShowFromDB(id)
+        show.value = ShowsBusiness.getShowFromDB(id)?.apply { isFavorite = true }
         updateShow()
     }
 
@@ -31,7 +31,13 @@ class ShowViewModel(var id: Int) : ViewModel() {
         ShowsBusiness.getShowFromAPI(id,
                 {
                     onRequestFinished.call()
-                    show.value = it
+
+                    ShowsBusiness.getShowFromDB(id)?.let {
+                        it.isFavorite = true
+                        show.value = it
+                    } ?: kotlin.run {
+                        show.value = it
+                    }
                 },
                 { error ->
                     onRequestFinished.call()

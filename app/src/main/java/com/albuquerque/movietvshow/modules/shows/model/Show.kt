@@ -43,7 +43,7 @@ open class Show: RealmObject() {
     @SerializedName("number_of_seasons")
     var seasons: Int = 0
 
-    var networks: RealmList<Image> = RealmList()
+    var networks: RealmList<Picture> = RealmList()
 
     @SerializedName("next_episode_to_air")
     var nextEpisode: NextEpisode? = null
